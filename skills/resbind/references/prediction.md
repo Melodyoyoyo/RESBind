@@ -2,9 +2,24 @@
 
 ## 1. Obtain and verify RESBind
 
-Clone https://github.com/Melodyoyoyo/RESBind using the user's authorized Git access,
-record `git rev-parse HEAD`, and read that revision's README. Private-repository
-access failure is an access issue, not a reason to request a password in chat.
+If the user supplies a local checkout or RESBind trial ZIP, use it first. Extract
+the trial archive into a new directory without overwriting existing work. Locate
+the repository root containing README.md, pyproject.toml, release_manifest.json,
+models/ and examples/. A separate Skill ZIP contains instructions only, not these
+runtime assets. Ask for the trial ZIP/path if only the Skill was provided and the
+user has no repository access. Do not insist on GitHub registration or cloning.
+
+For a local archive, record its filename and SHA256; Git metadata may be absent,
+so do not require `git rev-parse` to succeed or invent a revision. Read the bundled
+README and use the bundled Skill if it differs from a separately supplied copy.
+This route avoids GitHub authentication, but installing Python dependencies may
+still need internet access. Saved P07014 features need no external prediction
+submission; a new FASTA still needs the upstream workflow and compute below.
+
+If no local package is supplied, clone https://github.com/Melodyoyoyo/RESBind using
+the user's authorized Git access, record `git rev-parse HEAD`, and read its README.
+Private-repository access failure is an access issue, not a reason to request a
+password in chat. Offer an owner-provided archive as an alternative, not a bypass.
 Check files against `release_manifest.json` before installing or running weights.
 Create a dedicated environment: Python 3.12 was tested; MCP requires >=3.10.
 From the checkout run `python -m pip install ".[mcp]"` for local MCP, or

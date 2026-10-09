@@ -8,6 +8,13 @@ without self edges; pooling uses both directions. Pocket clustering is separate.
 
 ## Archived-input smoke test
 
+If you received the private trial ZIP, extract it into a new folder and use the
+RESBind directory inside it as the repository root. No GitHub account or Git
+clone is required. Start with skills/resbind/SKILL.md; the separate Skill ZIP is
+instructions only. The trial includes weights and P07014 inputs, not Python
+dependencies or the large ProtT5/ESMFold upstream models. Dependency installation
+may require internet. This is not a completely offline distribution.
+
 Install Python >=3.9 and an appropriate PyTorch distribution. From this directory:
 
 ```sh
