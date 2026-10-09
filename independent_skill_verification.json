@@ -1,0 +1,38 @@
+{
+  "passed": true,
+  "date": "2026-10-09",
+  "tested_revision": "2f3ce3abf0e04a2dd6c401386f5c1b657f7ff98a",
+  "kind": "fresh_context_agent_saved_feature_skill_trial",
+  "inherited_chat_history": false,
+  "implementation_hints_from_parent": false,
+  "product_code_modified_by_tester": false,
+  "fresh_venv": true,
+  "system_site_packages": false,
+  "host": "existing Windows machine",
+  "python": "3.12.7",
+  "versions": {"torch": "2.14.1", "numpy": "2.5.3", "pandas": "3.0.6", "mcp": "1.30.0"},
+  "manifest_files_checked": 48,
+  "pip_check_passed": true,
+  "transport": "official MCP SDK stdio, ephemeral client",
+  "tools_invoked": ["check_environment", "inspect_fasta", "predict_saved"],
+  "protein": "P62942",
+  "residues": 108,
+  "sequence_sha256": "7c2c9a4005a08f9f8ed2ce2e3b7d9432dd39547abafef80ffab6adbb89753b2c",
+  "checkpoint_sha256": "6ce257e8edd76f26cfb392fc3a6c5911ee3ab28b2bfb055e12042773e8736d20",
+  "feature_provenance_verified": true,
+  "positive_residue_counts": {"metal": 1, "nucleic_acid": 14, "small_molecule": 19},
+  "pocket_counts": {"metal": 0, "nucleic_acid": 2, "small_molecule": 3},
+  "isolated_residue_counts": {"metal": 1, "nucleic_acid": 0, "small_molecule": 1},
+  "sequence_order_probability_candidate_zip_checks_passed": true,
+  "unit_tests_passed": 11,
+  "observed_friction": [
+    "Sandboxed clone, ensurepip and MCP startup required authorized host-context retries; exact silent-startup cause was not established.",
+    "Generic CLI generating-stage labels also appear for imported features; summary input_sources identifies the actual route."
+  ],
+  "limits": [
+    "Supplied feature files were reused; upstream model downloads, GPU runs and NetSurfP submission were not repeated.",
+    "Existing host and registry wheel cache; not a new physical machine or general platform certification.",
+    "No persistent desktop-agent MCP registration was tested.",
+    "No training-set novelty, biological accuracy or redistribution-rights conclusion."
+  ]
+}

@@ -121,6 +121,21 @@ is implied by this protocol test.
 Keep the legacy `web` extra in a separate environment: its Pydantic constraint
 conflicts with the MCP SDK dependency. The static showcase needs neither extra.
 
+### Independent saved-feature Skill trial
+
+A fresh-context agent tested revision 2f3ce3a without prior conversation history
+or implementation hints. It cloned the private repository, checked all 48 recorded
+file hashes, installed into a new Windows venv (no system-site packages), read the
+Skill and invoked the three tools through the official MCP stdio client. P62942's
+108 residues, all three tracks, task-wise candidates and ZIP integrity passed;
+no product code changes were required. See independent_skill_verification.json.
+
+This is independent **supplied-feature CPU** acceptance, not a complete fresh
+upstream-generation trial or persistent desktop-client setup. Authorized execution
+outside the test sandbox was needed for installation and MCP startup. CLI progress
+currently uses generic "Generating" labels even for imported features; consult
+summary.input_sources and checksums to distinguish imported versus generated data.
+
 ## Training
 
 training/train_v6.py retains the research training implementation, with explicit
