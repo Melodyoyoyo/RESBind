@@ -1,0 +1,19 @@
+{
+  "passed": true,
+  "transport": "stdio",
+  "sdk_version": "1.30.0",
+  "tools": [
+    "check_environment",
+    "inspect_fasta",
+    "predict_saved"
+  ],
+  "max_score_differences": {
+    "metal": 2.0000000000575113e-07,
+    "nucleic_acid": 1.8000000001627825e-07,
+    "small_molecule": 1.4999999997655777e-07
+  },
+  "identical_calls": true,
+  "path_rejection_passed": true,
+  "checkpoint_sha256": "6ce257e8edd76f26cfb392fc3a6c5911ee3ab28b2bfb055e12042773e8736d20",
+  "scope": "Installed package, saved P07014 features, CPU; not full new-protein or independent Skill acceptance."
+}

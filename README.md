@@ -1,7 +1,7 @@
 # RESBind V6 local release candidate
 
-V6, bidirectional contacts, seed 42, no refiner. This directory is staged locally,
-not published or ready for unrestricted redistribution. The bundle contains the
+V6, bidirectional contacts, seed 42, no refiner. This is a private development
+candidate, not ready for unrestricted redistribution. The bundle contains the
 unchanged trained checkpoint, four scalers and fixed validation-MCC thresholds.
 Input contacts are built from ESMFold C-alpha coordinates at <=10 Angstrom,
 without self edges; pooling uses both directions. Pocket clustering is separate.
@@ -59,7 +59,53 @@ P62942 has now passed one new-sequence engineering acceptance in the research
 pipeline: fresh HPC ProtT5/ESMFold plus a CSV downloaded by the agent from the
 official DTU web form (job 6AC8CAC2001551F359F9C19B, 108 residues). This does not
 establish a robust automated feature provider or a new-sequence test of this
-installed package. MCP integration and Skill setup remain unvalidated.
+installed package. The newer local MCP test is described below; independent
+full-workflow Skill acceptance remains outstanding.
+
+## Agent Skill and local MCP
+
+The full-workflow instructions are in [skills/resbind/SKILL.md](skills/resbind/SKILL.md).
+They cover installation, input validation, resource selection, NetSurfP browser
+acquisition, ProtT5/ESMFold preparation, prediction and labeled-data routing.
+The repository is private: other users need authorized access until public release.
+
+For the local stdio bridge use Python >=3.10 (tested with 3.12):
+
+```sh
+python -m pip install ".[mcp]"
+```
+
+Configure `RESBIND_MCP_WORKSPACE` as a dedicated existing input/output directory,
+and `RESBIND_BUNDLE_DIR` as the absolute trusted model bundle path. Launch the
+environment's Python with `-I -m resbind_server.mcp_server` from the agent client.
+Tools: `check_environment`, `inspect_fasta`, `predict_saved`.
+The prediction tool requires matching FASTA, PDB, NetSurfP CSV and ProtT5 NPZ;
+it runs on CPU and returns local output paths. No HTTP listener, GPU model download,
+remote job submission, training or persistent queue is provided by this bridge.
+Use an owner-controlled workspace; path checks are not an OS security sandbox.
+
+Run the protocol acceptance test after installation:
+
+```sh
+python tests/mcp_acceptance.py .
+python -m unittest discover -s tests -v
+```
+
+The new `python -m resbind_server.feature_stage` launcher generates one upstream
+feature type per separate CUDA process using a complete local model snapshot.
+Its real GPU acceptance is still outstanding; see the Skill for invocation and
+provenance requirements. Never equate a saved-feature MCP test with a fresh
+sequence-to-result test. Existing verification JSON files describe earlier core
+tests; `mcp_verification.json` records the separate MCP protocol run.
+
+On 2026-10-09 the installed package passed the official SDK 1.30.0 stdio test:
+all three tools were discovered/called, invalid paths rejected, and the P07014
+CPU prediction matched all three task calls (maximum score difference 2e-7).
+No actual agent-client configuration or independent new-protein Skill replay
+is implied by this protocol test.
+
+Keep the legacy `web` extra in a separate environment: its Pydantic constraint
+conflicts with the MCP SDK dependency. The static showcase needs neither extra.
 
 ## Training
 

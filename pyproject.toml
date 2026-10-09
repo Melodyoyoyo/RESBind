@@ -12,7 +12,9 @@ features = ["transformers", "sentencepiece", "accelerate"]
 training = ["scikit-learn"]
 web = ["gradio>=4", "pydantic<2.11", "plotly", "py3Dmol"]
 test = ["pytest"]
+mcp = ["mcp>=1.28,<2"]
 [project.scripts]
 resbind = "resbind_server.cli:main"
+resbind-mcp = "resbind_server.mcp_server:main"
 [tool.setuptools.packages.find]
 where = ["src"]
