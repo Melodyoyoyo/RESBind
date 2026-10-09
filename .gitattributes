@@ -1,0 +1,2 @@
+# Preserve release-manifest checksums across Windows and Linux checkouts.
+* -text

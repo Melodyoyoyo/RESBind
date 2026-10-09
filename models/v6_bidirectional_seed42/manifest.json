@@ -1,0 +1,83 @@
+{
+  "schema_version": 1,
+  "model_name": "RESBind V6 bidirectional seed 42",
+  "source_checkpoint_sha256": "96a4d04be8e0a483588a36745a7a69a5284488d5fff98b37cec476d9f90577b2",
+  "tasks": [
+    "metal",
+    "nuclear",
+    "small"
+  ],
+  "threshold_mode": "val_mcc",
+  "thresholds": {
+    "metal": 0.9546052861213684,
+    "nuclear": 0.77,
+    "small": 0.79
+  },
+  "surface_columns": [
+    "protein_length",
+    "distance_to_n_term",
+    "distance_to_c_term",
+    "relative_position",
+    "is_n_terminal_window",
+    "is_c_terminal_window",
+    "center_rsa",
+    "center_exposed",
+    "center_asa",
+    "center_disorder",
+    "center_p_helix",
+    "center_p_strand",
+    "center_p_coil",
+    "window_mean_rsa",
+    "window_max_rsa",
+    "window_min_rsa",
+    "window_std_rsa",
+    "window_exposed_ratio",
+    "window_mean_asa",
+    "window_max_asa",
+    "window_mean_disorder",
+    "window_max_disorder",
+    "window_mean_p_helix",
+    "window_mean_p_strand",
+    "window_mean_p_coil"
+  ],
+  "dimensions": {
+    "prot": 1024,
+    "surface": 25,
+    "contact": 1051
+  },
+  "architecture": {
+    "view_dim": 256,
+    "view_hidden_dim": 256,
+    "classifier_hidden_dim": 128,
+    "dropout": 0.25,
+    "disabled_views": [],
+    "gate_mode": "learned",
+    "sharing_mode": "shared"
+  },
+  "gate_weights": {
+    "metal": [
+      0.8964750170707703,
+      0.20213299989700317,
+      0.20533299446105957
+    ],
+    "nuclear": [
+      0.9028369784355164,
+      0.6897879838943481,
+      0.20637699961662292
+    ],
+    "small": [
+      0.9038419723510742,
+      0.6929290294647217,
+      0.6969950199127197
+    ]
+  },
+  "bidirectional_contacts": true,
+  "training_graph_rows": 135191,
+  "files": {
+    "model": "model.pt",
+    "raw_surface_scaler": "raw_surface_scaler.npz",
+    "view_prot_scaler": "view_prot_scaler.npz",
+    "view_surface_scaler": "view_surface_scaler.npz",
+    "view_contact_scaler": "view_contact_scaler.npz"
+  }
+}

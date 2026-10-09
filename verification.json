@@ -1,0 +1,34 @@
+{
+  "passed": true,
+  "variant": {
+    "v6": true,
+    "refiner": false,
+    "bidirectional": true,
+    "contact_cutoff_angstrom": 10,
+    "seed": 42
+  },
+  "checks": {
+    "metal": {
+      "max_absolute_difference": 1.3000000004259604e-07,
+      "identical_calls": true
+    },
+    "nucleic_acid": {
+      "max_absolute_difference": 1.5000000003206893e-07,
+      "identical_calls": true
+    },
+    "small_molecule": {
+      "max_absolute_difference": 1.4000000003733248e-07,
+      "identical_calls": true
+    }
+  },
+  "unchanged_bundle_bytes": true,
+  "unchanged_model_class_ast": true,
+  "python": "3.9.21 (main, Dec 11 2024, 16:35:24) [MSC v.1929 64 bit (AMD64)]",
+  "torch": "2.5.1+cu121",
+  "limits": [
+    "Existing dependency environment reused; not a clean-machine dependency installation.",
+    "Saved ESMFold/ProtT5/NetSurfP features; not new-sequence feature generation.",
+    "Training reproduction, public licensing, Skill and MCP are not validated."
+  ],
+  "isolated_installed_import_check": true
+}

@@ -1,0 +1,57 @@
+{
+  "passed": true,
+  "kind": "clean_venv_saved_input_cpu_acceptance",
+  "python": "3.12.7 | packaged by Anaconda, Inc. | (main, Oct  4 2024, 13:17:27) [MSC v.1929 64 bit (AMD64)]",
+  "versions": {
+    "filelock": "4.0.12",
+    "fsspec": "2026.9.0",
+    "Jinja2": "3.1.6",
+    "MarkupSafe": "3.0.4",
+    "mpmath": "1.3.0",
+    "networkx": "3.7",
+    "numpy": "2.5.3",
+    "pandas": "3.0.6",
+    "pip": "24.2",
+    "python-dateutil": "2.9.0.post0",
+    "resbind-toolkit": "0.1.0",
+    "setuptools": "84.0.0",
+    "six": "1.17.0",
+    "sympy": "1.14.0",
+    "torch": "2.14.1",
+    "typing_extensions": "4.16.0",
+    "tzdata": "2026.5"
+  },
+  "inherit_system_packages": false,
+  "fresh_inference": true,
+  "cache_rerun_passed": true,
+  "zip_contents_verified": true,
+  "entrypoint_help_passed": true,
+  "pip_check": "No broken requirements found.",
+  "checks": {
+    "metal": {
+      "max_absolute_difference": 2.0000000000575113e-07,
+      "identical_calls": true
+    },
+    "nucleic_acid": {
+      "max_absolute_difference": 1.8000000001627825e-07,
+      "identical_calls": true
+    },
+    "small_molecule": {
+      "max_absolute_difference": 1.4999999997655777e-07,
+      "identical_calls": true
+    }
+  },
+  "variant": {
+    "model": "V6",
+    "seed": 42,
+    "refiner": false,
+    "bidirectional": true,
+    "contact_source": "saved ESMFold PDB",
+    "contact_cutoff_angstrom": 10
+  },
+  "limitations": [
+    "Fresh venv on existing Windows host, not a new physical machine.",
+    "Saved input features only; no new NetSurfP, ProtT5 or ESMFold generation.",
+    "Training, GPU, MCP, Skill and all-task pockets are not validated."
+  ]
+}

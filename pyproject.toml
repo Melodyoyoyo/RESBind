@@ -1,0 +1,18 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+[project]
+name = "resbind-toolkit"
+version = "0.1.0"
+description = "RESBind V6 bidirectional no-refiner local release candidate"
+requires-python = ">=3.9"
+dependencies = ["numpy", "pandas", "torch>=2.5.1"]
+[project.optional-dependencies]
+features = ["transformers", "sentencepiece", "accelerate"]
+training = ["scikit-learn"]
+web = ["gradio>=4", "pydantic<2.11", "plotly", "py3Dmol"]
+test = ["pytest"]
+[project.scripts]
+resbind = "resbind_server.cli:main"
+[tool.setuptools.packages.find]
+where = ["src"]
