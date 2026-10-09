@@ -35,6 +35,13 @@ per sequence. Do not submit a whole collection to an external service by default
 
 ## Compute and permissions
 
+Before downloading large models or choosing a compute host, read
+[compute.md](references/compute.md). It routes saved-feature CPU, local CUDA,
+HPC and rented-server use and defines the handoff when the agent cannot connect.
+For HPC, then read [hpc.md](references/hpc.md): a separate HPC-access skill is
+optional, not a prerequisite. Discover the user's actual login and scheduler
+procedure; never inherit the developer's cluster settings.
+
 Offer existing-feature CPU inference, local CUDA GPU, an available HPC compute
 allocation, or the user's already authorized rented machine. HPC is not mandatory.
 Inspect resources before selecting a route. Do not promise heavy feature models

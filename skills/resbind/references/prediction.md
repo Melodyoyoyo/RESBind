@@ -17,11 +17,17 @@ and weights without starting ProtT5, ESMFold or submitting a NetSurfP job.
 
 ## 2. Validate and select compute
 
+Read [compute.md](compute.md) to select a route. If HPC is selected, also read
+[hpc.md](hpc.md), even when the user has no cluster-access skill. Establish where
+the agent can run commands versus where a human must log in or submit a job.
+
 Use MCP `inspect_fasta` or Python `resbind_server.workflow.inspect_input`.
 Accept a single nonempty FASTA record; check lengths and reported substitutions.
 For provided features, validate their contents against this exact sequence.
 Check resource availability using MCP `check_environment` or a terminal GPU/memory
 inspection. This does not certify sufficient capacity for feature generation.
+MCP reports only the environment of its own server process: it cannot discover
+an SSH host's GPU or an HPC allocation. Check those on the selected machine.
 
 Reusing user-provided ProtT5, NetSurfP and ESMFold outputs is valid when their
 sequence and provenance match. Do not silently substitute an experimental PDB,

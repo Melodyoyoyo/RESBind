@@ -69,6 +69,12 @@ They cover installation, input validation, resource selection, NetSurfP browser
 acquisition, ProtT5/ESMFold preparation, prediction and labeled-data routing.
 The repository is private: other users need authorized access until public release.
 
+Compute selection is documented in [the resource guide](skills/resbind/references/compute.md):
+saved-feature CPU, local CUDA, HPC and existing rented servers. The
+[HPC onboarding guide](skills/resbind/references/hpc.md) supports users with no
+separate access skill, including human login/submission when agent SSH is unavailable.
+These are operating instructions, not evidence that every hardware/site was tested.
+
 For the local stdio bridge use Python >=3.10 (tested with 3.12):
 
 ```sh
