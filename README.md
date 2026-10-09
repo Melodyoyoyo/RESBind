@@ -137,11 +137,24 @@ full training run are not yet validated in this candidate. No refiner is include
 
 ## Scope and release gates
 
-Three tasks: metal, nucleic acid, small molecule. The existing CLI exports only
-legacy small-molecule candidate pockets (6 Angstrom components); it does not yet
-match the static website's all-task pocket postprocessing. Predictions are not
-experimental validation. The optional Gradio interface is a local prototype.
+Three tasks: metal, nucleic acid, small molecule. Pipeline schema 3 exports all
+three tasks' spatial components in pockets.csv, with task, candidate_type,
+threshold and cutoff columns. Singletons are labeled isolated_residue and excluded
+from pocket_counts; they remain in the CSV and summary's pockets_by_task.
+Residue lists use 1-based sequence positions, not arbitrary PDB residue numbers.
+Metal/nucleic-acid/small-molecule cutoffs are 6/8/6 Angstrom, centers are unweighted
+C-alpha means, and ranking is mean probability + 0.05 ln(1 + residue count).
+These candidate regions are not necessarily geometric cavities.
+
+All 15 website cases x 3 tasks matched the stored website outputs at tolerance
+1e-10 when given identical scores/structures; see pocket_parity_verification.json.
+Model contact construction remains bidirectional 10 Angstrom. Cache schema was
+bumped from 2 to 3, so old small-only outputs are not reused. The previous
+n_small_molecule_pockets summary field is replaced by task-wise pocket_counts
+and isolated_residue_counts; downstream readers must account for this schema change.
+Historical acceptance reports retain the limitations of their recorded revision.
+Predictions are not experimental validation. The optional Gradio interface is a local prototype.
 Before public release: verify optional dependency installation, data/model redistribution
-rights, choose a license, document training inputs, reconcile pocket outputs,
+rights, choose a license, document training inputs,
 and complete new-input acceptance. No license grant is asserted by this staging.
 No plotting scripts, website, private server settings or research caches ship.

@@ -44,6 +44,18 @@ async def run(root):
             assert not result.isError, result
             output = json.loads(result.content[0].text)
     actual = pd.read_csv(output["artifacts"]["residue_predictions.csv"])
+    summary = output['summary']
+    assert summary['pipeline_schema'] == 3
+    candidates = pd.read_csv(output['artifacts']['pockets.csv'])
+    assert {'task','candidate_type','threshold','cutoff_angstrom'} <= set(candidates.columns)
+    for task in ['metal','nucleic_acid','small_molecule']:
+        groups = summary['pockets_by_task'][task]
+        recovered = sorted(r for p in groups for r in p['residues'])
+        expected_positions = actual.loc[actual['pred_'+task],'position'].tolist()
+        assert recovered == expected_positions
+        assert summary['pocket_counts'][task] == sum(len(p['residues'])>1 for p in groups)
+        assert summary['isolated_residue_counts'][task] == sum(len(p['residues'])==1 for p in groups)
+        assert len(candidates[candidates.task==task]) == len(groups)
     expected = pd.read_csv(root / "examples/P07014/expected_predictions.csv")
     assert actual[["protein_id", "position", "amino_acid"]].equals(expected[["protein_id", "position", "amino_acid"]])
     deltas = {}
@@ -56,6 +68,7 @@ async def run(root):
     report = {"passed": True, "transport": "stdio", "sdk_version": importlib.metadata.version("mcp"),
               "tools": sorted(names), "max_score_differences": deltas,
               "identical_calls": True, "path_rejection_passed": True,
+              "pipeline_schema": 3, "three_task_candidate_checks_passed": True,
               "checkpoint_sha256": hashlib.sha256((root / "models/v6_bidirectional_seed42/model.pt").read_bytes()).hexdigest(),
               "scope": "Installed package, saved P07014 features, CPU; not full new-protein or independent Skill acceptance."}
     print(json.dumps(report, indent=2))

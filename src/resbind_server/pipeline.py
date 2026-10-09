@@ -15,8 +15,8 @@ import pandas as pd
 from .domain import PredictionArtifacts
 from .fasta import parse_single_fasta
 from .features import load_netsurfp_table, load_prott5_npz
+from .pockets import all_task_pockets, CUTOFFS, METHOD
 from .structure import (
-    cluster_small_molecule_pockets,
     coordinates,
     parse_pdb_ca,
     validate_structure_sequence,
@@ -94,7 +94,7 @@ class PredictionPipeline:
             "structure": {"mode": "uploaded" if pdb_path else "generated", "sha256": _sha256_bytes(pdb_bytes) if pdb_path else None},
         }
         job_key = json.dumps({
-            "pipeline_schema": 2, "protein_id": record.protein_id,
+            "pipeline_schema": 3, "pocket_method": METHOD, "protein_id": record.protein_id,
             "sequence": record.sequence, "bundle_hash": bundle_hash, "inputs": source_inputs,
         }, sort_keys=True).encode()
         job_id = _sha256_bytes(job_key)[:16]
@@ -157,21 +157,21 @@ class PredictionPipeline:
         _atomic_csv(predictions_path, predictions)
 
         stage("Clustering pockets")
-        small_threshold = float(self.services.predictor.thresholds["small_molecule"])
-        pockets = cluster_small_molecule_pockets(
-            coordinates(residues), predictions["prob_small_molecule"].to_numpy(), small_threshold, cutoff=6.0
+        pockets_by_task = all_task_pockets(
+            coordinates(residues),
+            {task: predictions[f"prob_{task}"].to_numpy() for task in CUTOFFS},
+            self.services.predictor.thresholds,
         )
         pocket_frame = pd.DataFrame(
             [
                 {
-                    "rank": p.rank, "score": p.score, "size": len(p.residues),
-                    "center_x": p.center_x, "center_y": p.center_y, "center_z": p.center_z,
-                    "mean_probability": p.mean_probability, "max_probability": p.max_probability,
-                    "residues": ";".join(map(str, p.residues)),
+                    **p, "task": task, "threshold": self.services.predictor.thresholds[task],
+                    "cutoff_angstrom": CUTOFFS[task], "size": len(p["residues"]),
+                    "residues": ";".join(map(str, p["residues"])),
                 }
-                for p in pockets
+                for task, candidates in pockets_by_task.items() for p in candidates
             ],
-            columns=["rank", "score", "size", "center_x", "center_y", "center_z", "mean_probability", "max_probability", "residues"],
+            columns=["task", "candidate_type", "threshold", "cutoff_angstrom", "rank", "score", "size", "center_x", "center_y", "center_z", "mean_probability", "max_probability", "residues"],
         )
         pockets_path = job_dir / "pockets.csv"
         _atomic_csv(pockets_path, pocket_frame)
@@ -189,7 +189,7 @@ class PredictionPipeline:
             "sequence_length": len(record.sequence),
             "sequence_sha256": _sha256_bytes(record.sequence.encode()),
             "structure_source": structure_source,
-            "pipeline_schema": 2,
+            "pipeline_schema": 3,
             "input_sources": source_inputs,
             "model_name": getattr(self.services.predictor, "manifest", {}).get("model_name", "RESBind V6"),
             "bundle_hash": bundle_hash,
@@ -199,7 +199,12 @@ class PredictionPipeline:
                 task: int(predictions[f"pred_{task}"].sum())
                 for task in ("metal", "nucleic_acid", "small_molecule")
             },
-            "n_small_molecule_pockets": len(pockets),
+            "pocket_method": METHOD,
+            "pockets_by_task": pockets_by_task,
+            "pocket_counts": {task: sum(p["candidate_type"] == "pocket" for p in candidates)
+                              for task, candidates in pockets_by_task.items()},
+            "isolated_residue_counts": {task: sum(p["candidate_type"] == "isolated_residue" for p in candidates)
+                                        for task, candidates in pockets_by_task.items()},
             "runtime_seconds": runtime,
             "warnings": ["Computational predictions require experimental validation."],
         }

@@ -94,5 +94,7 @@ and surface summaries are constructed inside the pipeline; do not manually use
 the pocket-clustering cutoff to build contacts.
 
 Check summary.json, residue_predictions.csv, pockets.csv, structure.pdb and ZIP.
-Three residue tasks are returned; pockets.csv currently describes only small
-molecules. No labels are required and no train/validation/test split is generated.
+Three residue tasks and all-task spatial candidates are returned. pockets.csv
+includes task and candidate_type; only multi-residue components count as pockets.
+Summary metadata records the 6/8/6 Angstrom cutoffs, ranking and centroid rule.
+No labels are required and no train/validation/test split is generated.

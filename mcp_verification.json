@@ -14,6 +14,8 @@
   },
   "identical_calls": true,
   "path_rejection_passed": true,
+  "pipeline_schema": 3,
+  "three_task_candidate_checks_passed": true,
   "checkpoint_sha256": "6ce257e8edd76f26cfb392fc3a6c5911ee3ab28b2bfb055e12042773e8736d20",
   "scope": "Installed package, saved P07014 features, CPU; not full new-protein or independent Skill acceptance."
 }

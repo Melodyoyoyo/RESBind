@@ -53,7 +53,8 @@ upstream model snapshot revisions, NetSurfP source/job, feature checksums,
 commands/environment and output locations. Verify output length, residue order,
 finite probabilities and successful completion; describe cached versus fresh steps.
 
-Return all three residue tracks and the downloadable files. Current CLI/MCP
-pocket output is **small-molecule-only legacy clustering**, not the website's
-all-task pockets. Never present unannotated predictions as experimental binding
+Return all three residue tracks and downloadable files. Schema 3 exports all
+three tasks' spatial candidates; singleton components are isolated_residue, not
+pockets. Report pocket_counts and isolated_residue_counts separately. These
+components are not necessarily geometric cavities. Never present predictions as experimental binding
 evidence or claim this draft Skill has passed independent full-workflow acceptance.

@@ -1,0 +1,325 @@
+{
+  "passed": true,
+  "protein_count": 15,
+  "task_case_count": 45,
+  "numeric_tolerance": 1e-10,
+  "checks": [
+    {
+      "protein": "O59248",
+      "task": "metal",
+      "candidates": 2,
+      "pockets": 2,
+      "isolated_residues": 0
+    },
+    {
+      "protein": "O59248",
+      "task": "nucleic_acid",
+      "candidates": 7,
+      "pockets": 4,
+      "isolated_residues": 3
+    },
+    {
+      "protein": "O59248",
+      "task": "small_molecule",
+      "candidates": 7,
+      "pockets": 3,
+      "isolated_residues": 4
+    },
+    {
+      "protein": "P03013",
+      "task": "metal",
+      "candidates": 2,
+      "pockets": 1,
+      "isolated_residues": 1
+    },
+    {
+      "protein": "P03013",
+      "task": "nucleic_acid",
+      "candidates": 5,
+      "pockets": 3,
+      "isolated_residues": 2
+    },
+    {
+      "protein": "P03013",
+      "task": "small_molecule",
+      "candidates": 5,
+      "pockets": 3,
+      "isolated_residues": 2
+    },
+    {
+      "protein": "P06956",
+      "task": "metal",
+      "candidates": 2,
+      "pockets": 0,
+      "isolated_residues": 2
+    },
+    {
+      "protein": "P06956",
+      "task": "nucleic_acid",
+      "candidates": 6,
+      "pockets": 5,
+      "isolated_residues": 1
+    },
+    {
+      "protein": "P06956",
+      "task": "small_molecule",
+      "candidates": 10,
+      "pockets": 5,
+      "isolated_residues": 5
+    },
+    {
+      "protein": "P07014",
+      "task": "metal",
+      "candidates": 7,
+      "pockets": 1,
+      "isolated_residues": 6
+    },
+    {
+      "protein": "P07014",
+      "task": "nucleic_acid",
+      "candidates": 5,
+      "pockets": 3,
+      "isolated_residues": 2
+    },
+    {
+      "protein": "P07014",
+      "task": "small_molecule",
+      "candidates": 2,
+      "pockets": 2,
+      "isolated_residues": 0
+    },
+    {
+      "protein": "P0A6C1",
+      "task": "metal",
+      "candidates": 6,
+      "pockets": 3,
+      "isolated_residues": 3
+    },
+    {
+      "protein": "P0A6C1",
+      "task": "nucleic_acid",
+      "candidates": 1,
+      "pockets": 1,
+      "isolated_residues": 0
+    },
+    {
+      "protein": "P0A6C1",
+      "task": "small_molecule",
+      "candidates": 7,
+      "pockets": 3,
+      "isolated_residues": 4
+    },
+    {
+      "protein": "P0A881",
+      "task": "metal",
+      "candidates": 1,
+      "pockets": 0,
+      "isolated_residues": 1
+    },
+    {
+      "protein": "P0A881",
+      "task": "nucleic_acid",
+      "candidates": 1,
+      "pockets": 1,
+      "isolated_residues": 0
+    },
+    {
+      "protein": "P0A881",
+      "task": "small_molecule",
+      "candidates": 6,
+      "pockets": 4,
+      "isolated_residues": 2
+    },
+    {
+      "protein": "P12734",
+      "task": "metal",
+      "candidates": 1,
+      "pockets": 0,
+      "isolated_residues": 1
+    },
+    {
+      "protein": "P12734",
+      "task": "nucleic_acid",
+      "candidates": 2,
+      "pockets": 2,
+      "isolated_residues": 0
+    },
+    {
+      "protein": "P12734",
+      "task": "small_molecule",
+      "candidates": 3,
+      "pockets": 1,
+      "isolated_residues": 2
+    },
+    {
+      "protein": "P19656",
+      "task": "metal",
+      "candidates": 0,
+      "pockets": 0,
+      "isolated_residues": 0
+    },
+    {
+      "protein": "P19656",
+      "task": "nucleic_acid",
+      "candidates": 2,
+      "pockets": 1,
+      "isolated_residues": 1
+    },
+    {
+      "protein": "P19656",
+      "task": "small_molecule",
+      "candidates": 5,
+      "pockets": 3,
+      "isolated_residues": 2
+    },
+    {
+      "protein": "P25524",
+      "task": "metal",
+      "candidates": 4,
+      "pockets": 1,
+      "isolated_residues": 3
+    },
+    {
+      "protein": "P25524",
+      "task": "nucleic_acid",
+      "candidates": 5,
+      "pockets": 1,
+      "isolated_residues": 4
+    },
+    {
+      "protein": "P25524",
+      "task": "small_molecule",
+      "candidates": 8,
+      "pockets": 4,
+      "isolated_residues": 4
+    },
+    {
+      "protein": "P27431",
+      "task": "metal",
+      "candidates": 1,
+      "pockets": 1,
+      "isolated_residues": 0
+    },
+    {
+      "protein": "P27431",
+      "task": "nucleic_acid",
+      "candidates": 4,
+      "pockets": 2,
+      "isolated_residues": 2
+    },
+    {
+      "protein": "P27431",
+      "task": "small_molecule",
+      "candidates": 9,
+      "pockets": 4,
+      "isolated_residues": 5
+    },
+    {
+      "protein": "P53615",
+      "task": "metal",
+      "candidates": 2,
+      "pockets": 1,
+      "isolated_residues": 1
+    },
+    {
+      "protein": "P53615",
+      "task": "nucleic_acid",
+      "candidates": 4,
+      "pockets": 2,
+      "isolated_residues": 2
+    },
+    {
+      "protein": "P53615",
+      "task": "small_molecule",
+      "candidates": 7,
+      "pockets": 4,
+      "isolated_residues": 3
+    },
+    {
+      "protein": "Q3E840",
+      "task": "metal",
+      "candidates": 2,
+      "pockets": 2,
+      "isolated_residues": 0
+    },
+    {
+      "protein": "Q3E840",
+      "task": "nucleic_acid",
+      "candidates": 2,
+      "pockets": 0,
+      "isolated_residues": 2
+    },
+    {
+      "protein": "Q3E840",
+      "task": "small_molecule",
+      "candidates": 1,
+      "pockets": 1,
+      "isolated_residues": 0
+    },
+    {
+      "protein": "Q6NS38",
+      "task": "metal",
+      "candidates": 2,
+      "pockets": 1,
+      "isolated_residues": 1
+    },
+    {
+      "protein": "Q6NS38",
+      "task": "nucleic_acid",
+      "candidates": 6,
+      "pockets": 3,
+      "isolated_residues": 3
+    },
+    {
+      "protein": "Q6NS38",
+      "task": "small_molecule",
+      "candidates": 13,
+      "pockets": 3,
+      "isolated_residues": 10
+    },
+    {
+      "protein": "Q96FX7",
+      "task": "metal",
+      "candidates": 2,
+      "pockets": 0,
+      "isolated_residues": 2
+    },
+    {
+      "protein": "Q96FX7",
+      "task": "nucleic_acid",
+      "candidates": 3,
+      "pockets": 3,
+      "isolated_residues": 0
+    },
+    {
+      "protein": "Q96FX7",
+      "task": "small_molecule",
+      "candidates": 8,
+      "pockets": 3,
+      "isolated_residues": 5
+    },
+    {
+      "protein": "Q9A585",
+      "task": "metal",
+      "candidates": 1,
+      "pockets": 0,
+      "isolated_residues": 1
+    },
+    {
+      "protein": "Q9A585",
+      "task": "nucleic_acid",
+      "candidates": 2,
+      "pockets": 2,
+      "isolated_residues": 0
+    },
+    {
+      "protein": "Q9A585",
+      "task": "small_molecule",
+      "candidates": 6,
+      "pockets": 3,
+      "isolated_residues": 3
+    }
+  ],
+  "demo_implementation_sha256": "467cbbab5c8abe72921c3cd7878a141dce31f5e6bd8e64b1ddf28cc42dd0eca1",
+  "scope": "Identical supplied scores and structures; postprocessing parity, not model accuracy."
+}

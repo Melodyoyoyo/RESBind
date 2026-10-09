@@ -62,7 +62,8 @@ def predict_saved(fasta: str, pdb: str, netsurfp_csv: str, prott5_npz: str) -> d
 
     PDB must be an ESMFold prediction with matching sequence; provenance is the
     caller's responsibility. No downloads, training or remote jobs. Synchronous,
-    one job at a time, 180-second timeout. Pocket output is small-molecule-only.
+    one job at a time, 180-second timeout. All three tasks export spatial candidates;
+    single-residue components are explicitly labeled isolated_residue, not pockets.
     """
     if not _lock.acquire(blocking=False):
         raise ValueError("A prediction is running. Retry after it finishes.")
@@ -94,7 +95,7 @@ def predict_saved(fasta: str, pdb: str, netsurfp_csv: str, prott5_npz: str) -> d
             raise ValueError("Prediction failed: " + result.stderr[-2000:])
         summary = json.loads((run / "results" / "summary.json").read_text(encoding="utf-8"))
         return {"summary": summary, "artifacts": {p.name: str(p) for p in (run / "results").iterdir()},
-                "scope": "Three residue tasks; legacy small-molecule pockets only. Predictions are not experimental evidence."}
+                "scope": "Three residue tasks and task-wise spatial candidates. Isolated residues are separate from pockets; predictions are not experimental evidence."}
     finally:
         _lock.release()
 

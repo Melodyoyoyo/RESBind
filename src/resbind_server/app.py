@@ -77,7 +77,7 @@ def create_app(settings: Optional[Settings] = None):
         gr.Markdown(
             "# RESBind\n"
             "Predict metal-, nucleic-acid-, and small-molecule-binding residues from one protein sequence. "
-            "Small-molecule hits are grouped into 6 Å candidate pockets."
+            "Hits are grouped into task-wise candidate pockets (6/8/6 Å); isolated residues are labeled separately."
         )
         with gr.Row():
             with gr.Column(scale=2):
@@ -92,7 +92,7 @@ def create_app(settings: Optional[Settings] = None):
         viewer = gr.HTML(label="3D structure")
         with gr.Tab("Predicted residues"):
             residues = gr.Dataframe(interactive=False)
-        with gr.Tab("Small-molecule pockets"):
+        with gr.Tab("Candidate pockets and isolated residues"):
             pockets = gr.Dataframe(interactive=False)
         downloads = gr.File(label="Download results", file_count="multiple")
         run.click(submit, [sequence, fasta, pdb], [status, summary, tracks, viewer, residues, pockets, downloads])
