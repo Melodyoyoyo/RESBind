@@ -1,0 +1,50 @@
+{
+  "passed": true,
+  "protein": "P62942",
+  "length": 108,
+  "release_revision": "38abe57",
+  "slurm_job_id": "379654",
+  "sequence_sha256": "7c2c9a4005a08f9f8ed2ce2e3b7d9432dd39547abafef80ffab6adbb89753b2c",
+  "fresh_gpu_stages": {
+    "prott5": {
+      "output_sha256": "b2a69b1c45c6c331062560b81a2909ed0839009f2bd4a1dab29116293beb3b13",
+      "model_revision": "973be27c52ee6474de9c945952a8008aeb2a1a73",
+      "model_config_sha256": "899fe63bf0178fd23583eca238ade81d56a1779c344741f391c3902855c64b77",
+      "torch": "2.6.0+cu124"
+    },
+    "esmfold": {
+      "output_sha256": "a5753aabb03488cee68988ead6842db331aefe5269b834dc9c8ccaa6f6a4665e",
+      "model_revision": "75a3841ee059df2bf4d56688166c8fb459ddd97a",
+      "model_config_sha256": "6b98125e2685fef2875499f6bd7c83968a077993ab53f99bf5581113665f7cc6",
+      "torch": "2.6.0+cu124"
+    }
+  },
+  "netsurfp": "Previously obtained official DTU CSV, reused after hash and sequence validation",
+  "netsurfp_job_id": "6AC8CAC2001551F359F9C19B",
+  "mcp_transport": "stdio",
+  "residue_checks": {
+    "metal": {
+      "positive_residues": 1,
+      "max_difference_vs_previous_research_run": 9.999999994736442e-08,
+      "same_calls_as_previous": true
+    },
+    "nucleic_acid": {
+      "positive_residues": 14,
+      "max_difference_vs_previous_research_run": 1.0000000005838672e-07,
+      "same_calls_as_previous": true
+    },
+    "small_molecule": {
+      "positive_residues": 19,
+      "max_difference_vs_previous_research_run": 1.0000000005838672e-07,
+      "same_calls_as_previous": true
+    }
+  },
+  "zip_integrity_passed": true,
+  "limitations": [
+    "Existing HPC dependency environment reused; not clean GPU installation.",
+    "NetSurfP browser submission was not repeated in this acceptance.",
+    "Single short protein, not all lengths/hardware.",
+    "CLI/MCP pockets remain small-molecule-only.",
+    "Not an independent agent replay or biological validation."
+  ]
+}

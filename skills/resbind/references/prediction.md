@@ -32,8 +32,10 @@ AlphaFold structure, different embedding model or alternate surface predictor.
 Do this only on the selected CUDA compute machine/allocation, in a feature-specific
 environment if dependencies differ from the CPU/MCP environment. Install the
 package's `features` extra and run import checks before reserving long compute time.
-The new portable launcher has not yet passed GPU acceptance; dependency/model
-compatibility may need resolution. Do not describe it as validated on all platforms.
+The launcher passed one 108-residue P62942 acceptance on RTX A6000 with an existing
+Python 3.10.18 / torch 2.6.0+cu124 / transformers 5.3.0 environment and local weights.
+That is not clean-environment installation or validation on all GPUs/lengths.
+See `release_gpu_verification.json` in the repository for the tested scope.
 
 Obtain complete snapshots from the official upstream repositories
 `Rostlab/prot_t5_xl_uniref50` and `facebook/esmfold_v1`. Read their model cards and

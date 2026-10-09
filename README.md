@@ -91,12 +91,26 @@ python tests/mcp_acceptance.py .
 python -m unittest discover -s tests -v
 ```
 
-The new `python -m resbind_server.feature_stage` launcher generates one upstream
+The `python -m resbind_server.feature_stage` launcher generates one upstream
 feature type per separate CUDA process using a complete local model snapshot.
-Its real GPU acceptance is still outstanding; see the Skill for invocation and
-provenance requirements. Never equate a saved-feature MCP test with a fresh
-sequence-to-result test. Existing verification JSON files describe earlier core
-tests; `mcp_verification.json` records the separate MCP protocol run.
+It passed a P62942 GPU acceptance on 2026-10-09: GitHub revision 38abe57 was
+installed into a new target directory, then fresh ProtT5 and ESMFold outputs
+were generated on an RTX A6000 (Slurm job 379654, 4m55s total). The existing
+HPC dependency environment was reused: Python 3.10.18, torch 2.6.0+cu124,
+transformers 5.3.0. This is not a clean GPU dependency-installation test.
+
+Those newly generated features, together with the previously obtained and
+hash-verified DTU NetSurfP CSV, passed local MCP V6 inference. All 108 residues,
+three score tracks, thresholds, feature checksums and ZIP contents were checked.
+All residue calls matched the previous research run; maximum score difference
+was approximately 1e-7. See `release_gpu_verification.json`. Model-loader warnings
+were retained, not suppressed by altering weights/configuration. This one-case
+engineering check is not biological validation or a guarantee for every GPU/length.
+
+See the Skill for invocation and provenance requirements. Existing verification
+JSON files describe earlier core tests; `mcp_verification.json` records the
+separate saved-input MCP protocol run. Independent complete Skill replay,
+fresh feature-model download/install and general hardware support remain open.
 
 On 2026-10-09 the installed package passed the official SDK 1.30.0 stdio test:
 all three tools were discovered/called, invalid paths rejected, and the P07014
