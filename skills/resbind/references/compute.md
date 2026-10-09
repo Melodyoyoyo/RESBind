@@ -12,8 +12,14 @@ NetSurfP is missing, obtaining its CSV does not require a user-owned GPU.
 
 If ProtT5 or ESMFold features are missing, ask only what is not already known:
 
-> Do you want to use this computer, an existing HPC account, or an already rented
-> server? If unsure, may I check this computer's available compute first?
+> Do you want to use this computer or a remote machine you can access (a laboratory
+> server, rented server or HPC)? Do you normally run commands directly there or
+> submit jobs to a queue? If unsure, may I check?
+
+Classify by execution method: local, authorized direct remote execution, or
+scheduler-managed execution. Record ownership (personal/laboratory/rented)
+separately for permissions and costs. A machine called a server is not necessarily
+HPC, GPU-equipped, rented or dedicated to this user.
 
 | Available resources | Route | What not to promise |
 |---|---|---|
@@ -21,7 +27,7 @@ If ProtT5 or ESMFold features are missing, ask only what is not already known:
 | Only CPU + missing ProtT5/ESMFold | Offer GPU access or user-supplied matching features; pause missing stages | Current feature launcher requires CUDA; CPU-only FASTA-to-result is not supported |
 | Local NVIDIA CUDA GPU | Check resources and isolated feature environment; run upstream stages sequentially | An available GPU does not establish sufficient memory |
 | HPC account | Follow hpc.md; use an authorized compute allocation | Do not assume Slurm, a known partition, or unattended SSH |
-| Existing rented machine with CUDA | Check authorized access, resources and cost scope; run remotely | Do not buy/start/resize instances implicitly |
+| Laboratory/personal/rented remote server with CUDA and direct execution permitted | Check access, resource-sharing rules and any cost scope; run remotely | Do not assume exclusive GPU use or buy/start/resize instances implicitly |
 | Apple/AMD GPU or uncertain backend | Explain current CUDA requirement; offer other compute or supplied features | Do not silently switch to MPS/ROCm or claim support |
 
 Do not substitute other structures/embeddings/surface predictors, split a protein
@@ -52,16 +58,27 @@ VRAM, RAM, sequence length and environment; do not retry indefinitely, kill othe
 processes, modify weights or silently truncate the sequence. Propose a bounded
 retry only after a concrete change, or request different compute.
 
-## Existing rented server
+## Ordinary remote server: laboratory, personal or rented
 
-Ask for the existing connection method, allowed directory, GPU allocation and
-whether this is a dedicated instance or a scheduled/shared system. Scheduled
-systems follow hpc.md regardless of who bills for them. For a dedicated instance,
-run within the authorized workspace using a restart-visible log and process ID.
+Ask for the normal connection method, allowed directory, GPU allocation and
+whether direct execution is permitted or a scheduler is required. Scheduled
+systems follow hpc.md regardless of ownership. Shared laboratory servers may
+permit direct execution but require reserving a GPU or agreeing resource limits
+with an administrator. Follow those rules; free VRAM alone is not authorization
+to occupy a shared GPU. Do not terminate another user's process to make room.
 
-Confirm that the user authorizes using the instance for this run and clarify any
-time/cost limit. If cost is unknown, do not promise a price or that the run is
-free. Ask before provisioning, resizing or extending paid resources. Account
+No separate server-access skill is necessary. Use the user's normal connection
+procedure and authorized configuration. Perform the local-CUDA environment checks
+on the remote machine, not on the agent's laptop. A CPU-only remote server uses
+the saved-feature CPU route; its server label does not change requirements.
+For permitted direct execution, create an isolated case directory and use a
+site-approved persistent session or batch process with a recorded PID and log.
+Do not assume an SSH disconnect leaves foreground computation running. Inspect
+the recorded process/log after reconnection before starting a duplicate run.
+
+Confirm permission and resource/time limits for the run. For paid machines,
+clarify the cost scope; if cost is unknown, do not promise a price or a free run.
+Ask before provisioning, resizing or extending paid resources. Account
 login/password/MFA belongs in the user's login interface, never in SKILL.md.
 Use existing SSH aliases/keys with permission; do not collect private keys.
 
