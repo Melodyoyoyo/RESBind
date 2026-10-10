@@ -102,8 +102,10 @@ Do not redistribute NetSurfP software or claim DTU has endorsed this integration
 
 ## 5. Run V6 and verify
 
-With all files local, call MCP `inspect_fasta`, then `predict_saved`. Alternatively,
-from the checkout, with the actual prepared file paths:
+Follow the invocation policy in [mcp.md](mcp.md): prefer MCP when supported and
+authorized, or use CLI for an explicit user preference or a documented fallback.
+With all files local to the MCP workspace, call `inspect_fasta`, then
+`predict_saved`. For CLI, from the checkout with the actual prepared file paths:
 
 ```sh
 resbind predict --fasta input.fasta --pdb features-esmfold/structure.pdb --netsurfp-csv netsurfp.csv --prott5-npz features-prott5/prott5.npz --device cpu --out-dir results
@@ -119,3 +121,5 @@ Three residue tasks and all-task spatial candidates are returned. pockets.csv
 includes task and candidate_type; only multi-residue components count as pockets.
 Summary metadata records the 6/8/6 Angstrom cutoffs, ranking and centroid rule.
 No labels are required and no train/validation/test split is generated.
+Record the actual invocation route and supporting logs as specified in mcp.md.
+Keep distributable run records and report headings in English.

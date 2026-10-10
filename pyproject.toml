@@ -5,6 +5,7 @@ build-backend = "setuptools.build_meta"
 name = "resbind-toolkit"
 version = "0.1.0"
 description = "RESBind V6 bidirectional no-refiner local release candidate"
+license = {file = "LICENSE"}
 requires-python = ">=3.9"
 dependencies = ["numpy", "pandas", "torch>=2.5.1"]
 [project.optional-dependencies]

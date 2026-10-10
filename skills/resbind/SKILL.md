@@ -59,6 +59,12 @@ shared instructions. A website displaying examples supplies no compute resources
 
 ## Evidence and handoff
 
+Use English for distributable documentation, report headings, metadata keys and
+status descriptions. Conversation with the user may follow their preferred language.
+For prediction, prefer MCP when the client supports it and the user authorizes
+configuration; follow [mcp.md](references/mcp.md) for fallback and execution records.
+MCP is optional and does not change the model or its scientific outputs.
+
 Record repository revision, checkpoint checksum, normalized sequence checksum,
 upstream model snapshot revisions, NetSurfP source/job, feature checksums,
 commands/environment and output locations. Verify output length, residue order,

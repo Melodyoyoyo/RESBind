@@ -183,7 +183,15 @@ n_small_molecule_pockets summary field is replaced by task-wise pocket_counts
 and isolated_residue_counts; downstream readers must account for this schema change.
 Historical acceptance reports retain the limitations of their recorded revision.
 Predictions are not experimental validation. The optional Gradio interface is a local prototype.
-Before public release: verify optional dependency installation, data/model redistribution
-rights, choose a license, document training inputs,
-and complete new-input acceptance. No license grant is asserted by this staging.
+Before public release: verify optional dependency installation and bundled-example
+redistribution rights, document training inputs, and complete the remaining
+publication checks.
 No plotting scripts, website, private server settings or research caches ship.
+
+## License
+
+Original RESBind code, documentation and the V6 checkpoint/scalers are provided
+under the [MIT License](LICENSE), copyright 2026 Minghan Chen. Third-party
+resources are not relicensed; see [license scope and third-party notices](THIRD_PARTY_NOTICES.md).
+Bundled-example publication clearance remains pending. A software license is not
+evidence of biological validity or a guarantee of model performance.
