@@ -1,14 +1,35 @@
-# RESBind V6 local release candidate
+# RESBind
 
-V6, bidirectional contacts, seed 42, no refiner. This is a private development
-candidate, not ready for unrestricted redistribution. The bundle contains the
+Protein binding-residue prediction for metal, nucleic acid and small molecule
+tasks. This research release uses V6, bidirectional contacts, seed 42, no refiner.
+The bundle contains the
 unchanged trained checkpoint, four scalers and fixed validation-MCC thresholds.
 Input contacts are built from ESMFold C-alpha coordinates at <=10 Angstrom,
 without self edges; pooling uses both directions. Pocket clustering is separate.
 
+## Get the code and model
+
+The repository can be downloaded without a GitHub account:
+
+```sh
+git clone https://github.com/Melodyoyoyo/RESBind.git
+cd RESBind
+python -m venv .venv
+```
+
+Activate the environment with `.venv\Scripts\activate` on Windows Command Prompt,
+or `source .venv/bin/activate` on Linux/macOS. Alternatively, select its Python
+executable directly in your agent. Python 3.12 is the tested CPU configuration;
+this is not a guarantee for all operating systems. Without Git, use **Code >
+Download ZIP**, extract it, and open the extracted directory before creating the
+environment. Keep the bundled model directory alongside the code.
+
+For agent-assisted setup, start with [the Skill](skills/resbind/SKILL.md).
+MCP is optional; it provides local tools, not a hosted prediction service.
+
 ## Archived-input smoke test
 
-If you received the private trial ZIP, extract it into a new folder and use the
+If you received a repository or trial ZIP, extract it into a new folder and use the
 RESBind directory inside it as the repository root. No GitHub account or Git
 clone is required. Start with skills/resbind/SKILL.md; the separate Skill ZIP is
 instructions only. The trial includes weights and P07014 inputs, not Python
@@ -74,7 +95,7 @@ full-workflow Skill acceptance remains outstanding.
 The full-workflow instructions are in [skills/resbind/SKILL.md](skills/resbind/SKILL.md).
 They cover installation, input validation, resource selection, NetSurfP browser
 acquisition, ProtT5/ESMFold preparation, prediction and labeled-data routing.
-The repository is private: other users need authorized access until public release.
+No GitHub account is required to download this public repository.
 
 Compute selection is documented in [the resource guide](skills/resbind/references/compute.md):
 saved-feature CPU, local CUDA, ordinary remote servers (laboratory-owned, personal
@@ -183,9 +204,9 @@ n_small_molecule_pockets summary field is replaced by task-wise pocket_counts
 and isolated_residue_counts; downstream readers must account for this schema change.
 Historical acceptance reports retain the limitations of their recorded revision.
 Predictions are not experimental validation. The optional Gradio interface is a local prototype.
-Before public release: verify optional dependency installation and bundled-example
-redistribution rights, document training inputs, and complete the remaining
-publication checks.
+Remaining reproducibility work includes clean optional-feature dependency
+installation and complete training-data/split preparation documentation. This
+release is not a complete reproduction package for every manuscript experiment.
 No plotting scripts, website, private server settings or research caches ship.
 
 ## License
@@ -193,5 +214,6 @@ No plotting scripts, website, private server settings or research caches ship.
 Original RESBind code, documentation and the V6 checkpoint/scalers are provided
 under the [MIT License](LICENSE), copyright 2026 Minghan Chen. Third-party
 resources are not relicensed; see [license scope and third-party notices](THIRD_PARTY_NOTICES.md).
-Bundled-example publication clearance remains pending. A software license is not
-evidence of biological validity or a guarantee of model performance.
+No provider endorsement or special permission for third-party outputs is claimed.
+A software license is not evidence of biological validity or a guarantee of
+model performance.

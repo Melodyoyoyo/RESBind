@@ -7,8 +7,8 @@ description: Install and run RESBind V6 for protein binding-residue prediction, 
 
 Repository: https://github.com/Melodyoyoyo/RESBind. Prefer a user-supplied local
 RESBind checkout or trial ZIP when available; that route needs no GitHub account.
-For downloading from the currently private repository, require the user's
-legitimate access; never substitute a similarly named model.
+The public repository can be cloned or downloaded without a GitHub account.
+Never substitute a similarly named model if access fails.
 This is a development candidate, not a certified turnkey public service.
 
 Preserve V6 seed42, no refiner, bidirectional contacts built from ESMFold C-alpha

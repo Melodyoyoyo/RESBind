@@ -42,25 +42,10 @@ does not imply endorsement of RESBind by their providers.
 The P07014 example includes a sequence, ESMFold structure, ProtT5 embeddings and
 NetSurfP results. These files are not granted a new MIT license by this repository.
 Their file hashes are recorded in release_manifest.json; hashes establish identity,
-not redistribution rights. Publication clearance and any required attribution for
-these example inputs remain to be confirmed before public release, particularly
-whether the exported NetSurfP CSV may accompany the public software example.
-
-### Suggested clarification request to NetSurfP
-
-Subject: Redistribution of a NetSurfP-3.0 prediction CSV as a research example
-
-We are preparing RESBind, a research tool for protein binding-residue prediction,
-for public release. We would like to include one CSV containing NetSurfP-3.0 web
-server predictions for the public UniProt sequence P07014, so users can test our
-downstream inference without submitting a new job. We would cite NetSurfP-3.0
-and link to your official service. We would not distribute NetSurfP software or
-weights, or claim that our MIT license grants rights in your materials. Is public
-redistribution of this prediction CSV permitted, and is any additional attribution
-or restriction required? Our own code and model will allow commercial use under
-MIT; please clarify separately whether conditions apply to the bundled CSV.
-
-This is an unsent draft, not evidence of permission or provider approval.
+not redistribution rights. The NetSurfP CSV is a saved prediction result, not
+NetSurfP software or model weights. No special redistribution permission from
+DTU has been obtained or claimed; the online-output terms remain as described
+above. RESBind's MIT license does not override applicable third-party terms.
 
 Python dependencies retain their respective licenses. Installing RESBind does not
 replace those licenses with MIT.
