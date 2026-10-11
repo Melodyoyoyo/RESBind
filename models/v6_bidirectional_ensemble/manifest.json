@@ -1,6 +1,6 @@
 {
   "schema_version": 2,
-  "model_name": "RESBind three-model pocket ensemble",
+  "model_name": "RESBind metal ensemble and independent nucleic-acid/small-molecule models",
   "members": {
     "41": "../v6_bidirectional_seed41",
     "42": "../v6_bidirectional_seed42",
@@ -11,7 +11,6 @@
     "42": 0.2,
     "43": 0.4
   },
-  "nuclear_threshold": 0.7542161000000001,
   "residue_output_seed": 42,
   "refiner": false,
   "files": {
@@ -19,5 +18,6 @@
     "42": "../v6_bidirectional_seed42/manifest.json",
     "43": "../v6_bidirectional_seed43/manifest.json"
   },
-  "selection_history": "User froze after test exposure; nuclear radius8 was test-informed."
+  "selection_history": "Metal configuration frozen after test exposure; other tasks restored to original protocol.",
+  "pocket_protocol": "Metal ensemble unchanged; other tasks independent validation-F1 thresholds and original radii."
 }

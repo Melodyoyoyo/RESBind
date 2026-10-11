@@ -1,0 +1,61 @@
+{
+  "rows": [
+    {
+      "task": "metal",
+      "seed": null,
+      "sites": 198,
+      "hits": 127,
+      "top_n_percent": 64.14141414141415,
+      "candidate_parity": true
+    },
+    {
+      "task": "nuclear",
+      "seed": 41,
+      "sites": 107,
+      "hits": 76,
+      "top_n_percent": 71.02803738317758,
+      "candidate_parity": true
+    },
+    {
+      "task": "nuclear",
+      "seed": 42,
+      "sites": 107,
+      "hits": 76,
+      "top_n_percent": 71.02803738317758,
+      "candidate_parity": true
+    },
+    {
+      "task": "nuclear",
+      "seed": 43,
+      "sites": 107,
+      "hits": 80,
+      "top_n_percent": 74.76635514018692,
+      "candidate_parity": true
+    },
+    {
+      "task": "small",
+      "seed": 41,
+      "sites": 336,
+      "hits": 218,
+      "top_n_percent": 64.88095238095238,
+      "candidate_parity": true
+    },
+    {
+      "task": "small",
+      "seed": 42,
+      "sites": 336,
+      "hits": 214,
+      "top_n_percent": 63.69047619047619,
+      "candidate_parity": true
+    },
+    {
+      "task": "small",
+      "seed": 43,
+      "sites": 336,
+      "hits": 219,
+      "top_n_percent": 65.17857142857143,
+      "candidate_parity": true
+    }
+  ],
+  "scope": "Archived probabilities to candidates and strict DCC replay; not fresh model inference."
+}

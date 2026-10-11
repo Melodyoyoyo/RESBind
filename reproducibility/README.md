@@ -1,76 +1,11 @@
-# Paper protocols and three-seed models
+# Paper reproduction
 
-The three Full models are in `models/v6_bidirectional_seed41`, `seed42` and
-`seed43` (each directory uses the full `v6_bidirectional_seed` prefix).
-Each bundle includes its own checkpoint, manifest and four verified scalers.
-The existing seed42 model bundle and its stored thresholds are unchanged.
-The application default is now `models/v6_bidirectional_ensemble`.
-`prob_*`, `threshold_*` and `pred_*` retain the seed42 residue operating point.
-`prob_*_seed41/42/43` export each seed's probabilities for independent residue
-evaluation. `pocket_prob_*` contains 0.4/0.2/0.4 weighted ensemble probabilities
-and is used for pocket selection, centers and ranking.
-Select a different bundle with the absolute `RESBIND_BUNDLE_DIR` environment variable.
-No refiner is used.
+The default three-checkpoint bundle preserves the frozen metal probability ensemble (weights 0.4/0.2/0.4). Nucleic-acid and small-molecule pocket predictions have been restored to independent-seed evaluation. No refiner is used. The exact selectors, radii, centers, ranking, reference/matching rules and Table1 thresholds are in paper_protocols.json.
 
-## Table 1: independent seed evaluation
+Table1 remains independent seed41/42/43 mean and sample SD. `prob_*` retains seed42 residue outputs, while `prob_*_seed41/42/43` exports all probabilities. `pocket_prob_metal` is weighted; other `pocket_prob_*` columns retain seed42. The default pockets.csv and UI show seed42 for nucleic-acid/small-molecule tasks. The result ZIP additionally includes pockets_independent_seeds.csv and summary.json has each seed's candidates separately. Mean recall is computed after separate evaluation, never by merging candidate sets.
 
-Run inference separately with each bundle on exactly the original test residues,
-using the same frozen input features. Preserve `peptide_id`, `center_pos`, task
-labels and task masks in each prediction CSV. The expected columns are
-`label_metal`, `label_nuclear`, `label_small`, corresponding `mask_*` and `prob_*`.
-The CLI's public task names `nucleic_acid` and `small_molecule` need mapping to
-`nuclear` and `small` when preparing benchmark CSVs.
+Strict DCC <10 Angstrom Top-N: metal 64.14%; nuclear 72.27 +/-2.16%; small molecule 64.58 +/-0.79%. Metal uses top10%, radius8.5, probability-weighted centers, max-score-plus-size. Nuclear uses original seed thresholds and radii12/8/8; small molecule original seed thresholds and radius6 for every seed. Both use unweighted centers and mean-score-plus-size. Singletons remain eligible candidates. Benchmark replay requires the original cohort, mask-valid residues, annotations and coordinate mapping.
 
-Install evaluation dependencies with `python -m pip install ".[training]"`.
-From the repository root run:
+restored_pocket_verification.json checks full-cohort candidate parity and DCC using archived probabilities. It does not certify fresh full-cohort feature generation or inference. Historical frozen_pocket_code_verification.json and ensemble_runtime_verification.json describe the superseded all-task ensemble. The restored CPU pipeline was also run on supplied P07014 features; all 11 existing unit tests passed.
 
-```sh
-python reproducibility/evaluate_table1.py --seed41 seed41_test_predictions.csv --seed42 seed42_test_predictions.csv --seed43 seed43_test_predictions.csv --out-dir table1_results
-```
-
-The script uses the frozen validation-F1 thresholds in `paper_protocols.json`.
-It reports average precision, MCC and F1 separately for each seed, then their mean
-and sample SD. It does not average probabilities. Application defaults use
-validation-MCC thresholds and are not the Table 1 operating points.
-
-## Figure 2: task-specific pocket protocols
-
-`paper_protocols.json` contains the exact parameters.
-
-- Metal: probabilities from seeds 41/42/43 are weighted 0.4/0.2/0.4 before selecting
-  ceil(10% of mask-valid residues) per protein. Components use CA distances
-  <=8.5 angstrom; centers are probability-weighted CA centroids. Ranking is max
-  probability + 0.05 ln(1+size).
-- Nucleic acid: ensemble probabilities use the validation-F1 threshold
-  0.7542161000000001 and an 8 angstrom component radius. Centers are unweighted
-  CA centroids; ranking is mean probability + 0.05 ln(1+size).
-- Small molecule: ensemble probabilities select ceil(10% of eligible residues),
-  using radius 6 angstrom, probability-weighted CA centers and max probability
-  + 0.05 ln(1+size), as for Metal.
-- All tasks retain singletons as eligible ranked candidates.
-  Ties prefer larger size, then smaller first residue position.
-- Reference centers are unweighted annotated-residue CA centroids in the same
-  frozen ESMFold structures. Top-N uses the reference site count of each protein;
-  every reference independently checks its nearest center among those candidates.
-  Hits require strict DCC <10 angstrom. Recall is site-weighted.
-- All three tasks have one fixed ensemble recall; there is no seed SD.
-  Metal: 127/198 = 64.14%; nucleic acid: 78/107 = 72.90%; small molecule:
-  210/336 = 62.50%. The previous Figure 2 protocol is retained in
-  `paper_protocols_before_ensemble_freeze.json`.
-
-The application's default pocket code now implements these Figure 2 transformations.
-The benchmark uses task masks defining eligible residues. In a new unlabeled
-protein all modeled residues are eligible. Replaying benchmark evaluation must
-preserve those masks; `formal_candidate_pockets` accepts an eligibility mask.
-Full-cohort raw feature/annotation distribution and fresh released-package
-inference remain outstanding. Metal parameters and the nucleic-acid 8 angstrom
-radius were chosen after prior test exposure; freezing does not remove that
-selection limitation.
-
-## Verification scope
-
-New seed41/43 exports preserve every original state-dictionary tensor exactly.
-All bundled scaler arrays match the previously reconstructed preprocessing
-sidecar. `historical_preprocessing_verification.json` records the prior raw-input
-validation replay for all three research checkpoints (tolerance 1e-6). It is a
-historical verification, not a new full-cohort release acceptance.
+Metal retains its recorded test-exposure limitation. Restoring old methods does not create a new untouched test set. Checkpoint and scaler bytes are unchanged.

@@ -187,7 +187,7 @@ class V6EnsemblePredictor:
 
     @property
     def pocket_thresholds(self):
-        return {'metal': None, 'nucleic_acid': self.manifest['nuclear_threshold'], 'small_molecule': None}
+        return {'metal': None, 'nucleic_acid': .767058, 'small_molecule': .8118499}
 
     def predict(self, protein_id, sequence, embedding, surface_frame, contact_npz):
         results = {s:m.predict(protein_id,sequence,embedding,surface_frame,contact_npz)
@@ -200,6 +200,8 @@ class V6EnsemblePredictor:
                 out[f'prob_{task}_seed{seed}'] = frame[f'prob_{task}'].to_numpy()
             out[f'pocket_prob_{task}'] = sum(self.weights[s] * f[f'prob_{task}'].to_numpy(dtype=float)
                                                 for s,f in results.items())
+            if task != 'metal':
+                out[f'pocket_prob_{task}'] = out[f'prob_{task}_seed42']
         return out
 
 

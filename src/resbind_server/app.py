@@ -77,7 +77,7 @@ def create_app(settings: Optional[Settings] = None):
         gr.Markdown(
             "# RESBind\n"
             "Predict metal-, nucleic-acid-, and small-molecule-binding residues from one protein sequence. "
-            "Three-model probability ensembles generate ranked candidate pockets (8.5/8/6 Å). Isolated residues are labeled separately."
+            "Metal uses a three-model ensemble; nucleic-acid and small-molecule pockets are generated independently per model. The default view shows seed42 for those two tasks. Isolated residues are labeled separately."
         )
         with gr.Row():
             with gr.Column(scale=2):

@@ -64,7 +64,23 @@ FORMAL_METHOD = {
 }
 
 
-def formal_candidate_pockets(coords, probabilities, task, eligible=None):
+SEED_POCKET_RULES = {
+    'nucleic_acid': {'41': (.8106613, 12.), '42': (.767058, 8.), '43': (.8263235, 8.)},
+    'small_molecule': {'41': (.7878349, 6.), '42': (.8118499, 6.), '43': (.85898334, 6.)},
+}
+FORMAL_METHOD.update(version='metal_ensemble_other_tasks_independent_20261011',
+    nuclear_small_aggregation='Independent seeds; benchmark mean and sample SD; seed42 for default visualization',
+    nuclear_small_rules=SEED_POCKET_RULES,
+    nuclear_small_center='unweighted CA centroid',
+    nuclear_small_ranking='mean probability + 0.05 ln(1+size)')
+FORMAL_METHOD.pop('nuclear_selector', None)
+FORMAL_METHOD['metal_small_selector'] = 'Metal only: ceil(10% of eligible residues)'
+FORMAL_METHOD['metal_small_center'] = 'Metal only: probability-weighted CA centroid'
+FORMAL_METHOD['metal_small_ranking'] = 'Metal only: max probability + 0.05 ln(1+size)'
+FORMAL_METHOD['selection_history'] = 'Metal retains test-exposed configuration; other tasks restored to original independent-seed protocol.'
+
+
+def formal_candidate_pockets(coords, probabilities, task, eligible=None, seed=42):
     xyz = np.asarray(coords,dtype=np.float64)
     probs = np.asarray(probabilities,dtype=np.float64)
     if xyz.shape != (len(probs),3) or probs.ndim != 1 or not np.isfinite(xyz).all() or not np.isfinite(probs).all() or np.any((probs<0)|(probs>1)):
@@ -75,22 +91,24 @@ def formal_candidate_pockets(coords, probabilities, task, eligible=None):
     if eligible is not None and np.asarray(eligible).shape != probs.shape:
         raise ValueError('Invalid eligibility mask')
     if not len(positions): return []
-    if task == 'nucleic_acid':
-        selected = positions[probs[positions] >= .7542161000000001]
+    cutoff = FORMAL_CUTOFFS[task]
+    if task != 'metal':
+        threshold, cutoff = SEED_POCKET_RULES[task][str(seed)]
+        selected = positions[probs[positions] >= threshold]
     else:
         order = np.lexsort((positions,-probs[positions]))
         selected = np.sort(positions[order[:max(1,int(np.ceil(.1*len(positions))))]])
     # Reuse exact connected-component and deterministic ranking implementation.
-    local = candidate_pockets(xyz[selected],probs[selected],0.0,FORMAL_CUTOFFS[task])
+    local = candidate_pockets(xyz[selected],probs[selected],0.0,cutoff)
     result=[]
     for item in local:
         indices = selected[np.asarray(item['residues'])-1]
         values=probs[indices]
-        if task == 'nucleic_acid' or values.sum()<=0:
+        if task != 'metal' or values.sum()<=0:
             center=xyz[indices].mean(axis=0)
         else:
             center=np.average(xyz[indices],axis=0,weights=values)
-        base=values.mean() if task == 'nucleic_acid' else values.max()
+        base=values.mean() if task != 'metal' else values.max()
         result.append(dict(residues=(indices+1).tolist(),score=float(base+.05*np.log1p(len(indices))),
             center_x=float(center[0]),center_y=float(center[1]),center_z=float(center[2]),
             mean_probability=float(values.mean()),max_probability=float(values.max()),

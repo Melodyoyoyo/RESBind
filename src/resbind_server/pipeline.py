@@ -15,7 +15,7 @@ import pandas as pd
 from .domain import PredictionArtifacts
 from .fasta import parse_single_fasta
 from .features import load_netsurfp_table, load_prott5_npz
-from .pockets import all_task_pockets, CUTOFFS, METHOD, FORMAL_CUTOFFS, FORMAL_METHOD
+from .pockets import all_task_pockets, CUTOFFS, METHOD, FORMAL_CUTOFFS, FORMAL_METHOD, SEED_POCKET_RULES, formal_candidate_pockets
 from .structure import (
     coordinates,
     parse_pdb_ca,
@@ -179,6 +179,23 @@ class PredictionPipeline:
         )
         pockets_path = job_dir / "pockets.csv"
         _atomic_csv(pockets_path, pocket_frame)
+        independent_pockets = {}
+        if formal:
+            independent_pockets = {
+                task: {seed: formal_candidate_pockets(coordinates(residues),
+                    predictions[f'prob_{task}_seed{seed}'].to_numpy(), task, seed=seed)
+                    for seed in ('41', '42', '43')}
+                for task in SEED_POCKET_RULES
+            }
+            independent_rows = [dict(p, task=task, seed=int(seed),
+                threshold=SEED_POCKET_RULES[task][seed][0],
+                cutoff_angstrom=SEED_POCKET_RULES[task][seed][1],
+                residues=';'.join(map(str,p['residues'])))
+                for task, seeds in independent_pockets.items()
+                for seed, candidates in seeds.items() for p in candidates]
+            _atomic_csv(job_dir / 'pockets_independent_seeds.csv', pd.DataFrame(independent_rows,
+                columns=['task','seed','rank','score','candidate_type','threshold','cutoff_angstrom',
+                         'center_x','center_y','center_z','mean_probability','max_probability','residues']))
 
         stage("Packaging results")
         end = time.perf_counter()
@@ -205,7 +222,8 @@ class PredictionPipeline:
             },
             "pocket_method": FORMAL_METHOD if formal else METHOD,
             "residue_probability_source": "seed42; each seed also exported separately" if formal else "single selected model",
-            "pocket_probability_source": "weighted seeds41/42/43" if formal else "single selected model",
+            "pocket_probability_source": "Metal weighted seeds41/42/43; other tasks independent seeds (seed42 visualization)" if formal else "single selected model",
+            "independent_pockets_by_task_and_seed": independent_pockets,
             "pockets_by_task": pockets_by_task,
             "pocket_counts": {task: sum(p["candidate_type"] == "pocket" for p in candidates)
                               for task, candidates in pockets_by_task.items()},
@@ -217,6 +235,8 @@ class PredictionPipeline:
         _atomic_text(summary_path, json.dumps(summary, indent=2))
         archive_tmp = complete_path.with_suffix(".zip.tmp")
         with zipfile.ZipFile(archive_tmp, "w", compression=zipfile.ZIP_DEFLATED) as archive:
+            if formal:
+                archive.write(job_dir / 'pockets_independent_seeds.csv', arcname='pockets_independent_seeds.csv')
             for name in ["input.fasta", "structure.pdb", "residue_predictions.csv", "pockets.csv", "summary.json"]:
                 archive.write(job_dir / name, arcname=name)
         os.replace(archive_tmp, complete_path)
