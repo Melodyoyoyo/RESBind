@@ -1,11 +1,16 @@
 # RESBind
 
 Protein binding-residue prediction for metal, nucleic acid and small molecule
-tasks. This research release uses V6, bidirectional contacts, seed 42, no refiner.
+tasks. This research release includes three Full checkpoints (seeds 41/42/43),
+with bidirectional contacts and no refiner. The application defaults to seed 42.
 The bundle contains the
 unchanged trained checkpoint, four scalers and fixed validation-MCC thresholds.
 Input contacts are built from ESMFold C-alpha coordinates at <=10 Angstrom,
 without self edges; pooling uses both directions. Pocket clustering is separate.
+
+For Table 1 evaluation and task-specific Figure 2 parameters, see
+[paper reproducibility](reproducibility/README.md). Table 1 summarizes independently
+evaluated seeds; only Figure 2 Metal uses weighted probability ensembling.
 
 ## Get the code and model
 

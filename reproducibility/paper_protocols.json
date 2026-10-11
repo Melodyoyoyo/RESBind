@@ -1,0 +1,121 @@
+{
+  "schema_version": 1,
+  "seeds": [
+    41,
+    42,
+    43
+  ],
+  "refiner": false,
+  "table1": {
+    "aggregation": "Mean and sample SD (ddof=1) of three independently evaluated seeds; not averaged probabilities.",
+    "AUPRC": "average precision on mask-valid test residues",
+    "MCC_F1": "validation-F1-maximizing per-task per-seed threshold; >= comparison",
+    "thresholds": {
+      "41": {
+        "metal": 0.9134623,
+        "nuclear": 0.8106613,
+        "small": 0.7878349
+      },
+      "42": {
+        "metal": 0.94337624,
+        "nuclear": 0.767058,
+        "small": 0.8118499
+      },
+      "43": {
+        "metal": 0.96015364,
+        "nuclear": 0.8263235,
+        "small": 0.85898334
+      }
+    }
+  },
+  "figure2": {
+    "hit_rule": "strict DCC < 10 angstrom",
+    "reference_center": "unweighted annotated-residue CA centroid in frozen ESMFold coordinates",
+    "matching": "Each reference independently matches nearest ranked candidate among Top-N; N is reference site count per protein.",
+    "metal": {
+      "aggregation": "One weighted probability ensemble",
+      "weights": {
+        "41": 0.4,
+        "42": 0.2,
+        "43": 0.4
+      },
+      "selector": "top_fraction",
+      "selector_value": 0.1,
+      "radius_angstrom": 8.5,
+      "min_cluster_size": 1,
+      "center": "probability-weighted CA centroid",
+      "ranking": "max probability + 0.05 ln(1+size)",
+      "top_n_percent": 64.14141414141415,
+      "limitation": "Configuration chosen after prior test exposure; freezing does not remove that limitation."
+    },
+    "nuclear": {
+      "aggregation": "Evaluate each seed independently; report mean and sample SD.",
+      "center": "unweighted CA centroid",
+      "ranking": "mean probability + 0.05 ln(1+size)",
+      "min_cluster_size": 1,
+      "per_seed": {
+        "41": {
+          "selector": "validation_Fmax_threshold",
+          "threshold": 0.8106613,
+          "radius_angstrom": 12.0
+        },
+        "42": {
+          "selector": "validation_Fmax_threshold",
+          "threshold": 0.767058,
+          "radius_angstrom": 8.0
+        },
+        "43": {
+          "selector": "validation_Fmax_threshold",
+          "threshold": 0.8263235,
+          "radius_angstrom": 8.0
+        }
+      },
+      "top_n_percent": 72.27414330218068
+    },
+    "small": {
+      "aggregation": "Evaluate each seed independently; report mean and sample SD.",
+      "center": "unweighted CA centroid",
+      "ranking": "mean probability + 0.05 ln(1+size)",
+      "min_cluster_size": 1,
+      "per_seed": {
+        "41": {
+          "selector": "validation_Fmax_threshold",
+          "threshold": 0.7878349,
+          "radius_angstrom": 6.0
+        },
+        "42": {
+          "selector": "validation_Fmax_threshold",
+          "threshold": 0.8118499,
+          "radius_angstrom": 6.0
+        },
+        "43": {
+          "selector": "validation_Fmax_threshold",
+          "threshold": 0.85898334,
+          "radius_angstrom": 6.0
+        }
+      },
+      "top_n_percent": 64.58333333333334
+    }
+  },
+  "checkpoint_provenance": {
+    "41": {
+      "bundle": "models/v6_bidirectional_seed41",
+      "source_checkpoint_sha256": "193713dba55a5504a41557e6b202380f89c5c676386a6b8ab76c0156cad12cca",
+      "exported_checkpoint_sha256": "44763588f3002d8371a814f89c94a4a5ba43a3a1ba94c10b3fb338621eec2717",
+      "tensor_equality_to_research_checkpoint": true
+    },
+    "42": {
+      "bundle": "models/v6_bidirectional_seed42",
+      "source_checkpoint_sha256": "96a4d04be8e0a483588a36745a7a69a5284488d5fff98b37cec476d9f90577b2",
+      "exported_checkpoint_sha256": "6ce257e8edd76f26cfb392fc3a6c5911ee3ab28b2bfb055e12042773e8736d20",
+      "tensor_equality_to_research_checkpoint": true
+    },
+    "43": {
+      "bundle": "models/v6_bidirectional_seed43",
+      "source_checkpoint_sha256": "12b1d8d68fcb681b4e8f9603586a6812906154c38aef6cb5cb08ace590233c8d",
+      "exported_checkpoint_sha256": "00b0398c11bbb37173de993ddf79b1397a1fec7efa6c81c7858a8282c7156e82",
+      "tensor_equality_to_research_checkpoint": true
+    }
+  },
+  "scope": "Model bundles and paper parameters are supplied; full benchmark raw input distribution and a full released-package benchmark replay remain outstanding."
+}

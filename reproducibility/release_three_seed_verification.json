@@ -1,0 +1,42 @@
+{
+  "date": "2026-10-11",
+  "checkpoint_tensors_equal_to_original": true,
+  "scaler_arrays_equal_to_validated_sidecar": true,
+  "saved_input_P07014_CPU_inference": {
+    "41": {
+      "passed": true,
+      "residue_rows": 238,
+      "tasks": [
+        "metal",
+        "nucleic_acid",
+        "small_molecule"
+      ]
+    },
+    "42": {
+      "passed": true,
+      "residue_rows": 238,
+      "tasks": [
+        "metal",
+        "nucleic_acid",
+        "small_molecule"
+      ]
+    },
+    "43": {
+      "passed": true,
+      "residue_rows": 238,
+      "tasks": [
+        "metal",
+        "nucleic_acid",
+        "small_molecule"
+      ]
+    }
+  },
+  "table1_from_archived_full_test_predictions": {
+    "all_nine_means_and_SD_match": true,
+    "absolute_tolerance": 1e-12
+  },
+  "limitations": [
+    "Table 1 re-evaluation used archived probabilities; full test cohort was not rerun through the released package.",
+    "Figure 2 parameters are documented; the default application pocket workflow is unchanged."
+  ]
+}
