@@ -1,0 +1,34 @@
+{
+  "date": "2026-10-11",
+  "method": "Released candidate code vs research evaluator on archived ensemble probabilities and frozen full test cohorts",
+  "tasks": [
+    {
+      "task": "metal",
+      "proteins": 117,
+      "reference_sites": 198,
+      "top_n_hits": 127,
+      "top_n_percent": 64.14141414141415,
+      "ranked_candidates_compared": 643,
+      "candidate_residues_centers_scores_and_order_match": true
+    },
+    {
+      "task": "nuclear",
+      "proteins": 65,
+      "reference_sites": 107,
+      "top_n_hits": 78,
+      "top_n_percent": 72.89719626168224,
+      "ranked_candidates_compared": 270,
+      "candidate_residues_centers_scores_and_order_match": true
+    },
+    {
+      "task": "small",
+      "proteins": 205,
+      "reference_sites": 336,
+      "top_n_hits": 210,
+      "top_n_percent": 62.5,
+      "ranked_candidates_compared": 1214,
+      "candidate_residues_centers_scores_and_order_match": true
+    }
+  ],
+  "limitation": "This checks the released pocket transformation, not fresh full-cohort feature generation/model inference."
+}

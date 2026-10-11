@@ -47,7 +47,7 @@ absolute environment Python executable with arguments:
 Pass these environment variables, resolved to actual local absolute paths:
 
 - `RESBIND_MCP_WORKSPACE`: existing dedicated input/output directory.
-- `RESBIND_BUNDLE_DIR`: trusted checkout's `models/v6_bidirectional_seed42`.
+- `RESBIND_BUNDLE_DIR`: trusted checkout's `models/v6_bidirectional_ensemble`.
 
 Use that client's documented MCP configuration format; do not overwrite unrelated
 servers/settings. The server runs with the user's OS permissions. Its path checks

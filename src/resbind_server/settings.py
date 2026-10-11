@@ -12,7 +12,7 @@ WEBSERVER_ROOT = Path.cwd()
 
 @dataclass(frozen=True)
 class Settings:
-    bundle_dir: Path = WEBSERVER_ROOT / "models" / "v6_bidirectional_seed42"
+    bundle_dir: Path = WEBSERVER_ROOT / "models" / "v6_bidirectional_ensemble"
     job_root: Path = WEBSERVER_ROOT / "runtime" / "jobs"
     cache_root: Path = WEBSERVER_ROOT / "runtime" / "cache"
     device: str = "auto"

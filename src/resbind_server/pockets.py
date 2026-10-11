@@ -49,7 +49,59 @@ def candidate_pockets(coords, probabilities, threshold, cutoff):
     return [dict(rank=rank, **p) for rank, p in enumerate(pockets, 1)]
 
 
-def all_task_pockets(coords, probabilities, thresholds):
+FORMAL_CUTOFFS = {'metal':8.5, 'nucleic_acid':8.0, 'small_molecule':6.0}
+FORMAL_METHOD = {
+    'version':'three_task_ensemble_20261011', 'weights':{'41':.4,'42':.2,'43':.4},
+    'cutoffs_angstrom':FORMAL_CUTOFFS,
+    'metal_small_selector':'ceil(10% of eligible residues); probability descending, position ascending',
+    'nuclear_selector':'probability >= 0.7542161000000001 (ensemble validation F1 threshold)',
+    'metal_small_center':'probability-weighted CA centroid', 'nuclear_center':'unweighted CA centroid',
+    'metal_small_ranking':'max probability + 0.05 ln(1+size)',
+    'nuclear_ranking':'mean probability + 0.05 ln(1+size)',
+    'singleton_policy':'retained in ranked candidates and marked isolated_residue',
+    'dcc_evaluation':'strict <10 angstrom; requires reference annotations',
+    'selection_history':'Frozen after prior test exposure; nuclear radius8 chosen after test comparison.',
+}
+
+
+def formal_candidate_pockets(coords, probabilities, task, eligible=None):
+    xyz = np.asarray(coords,dtype=np.float64)
+    probs = np.asarray(probabilities,dtype=np.float64)
+    if xyz.shape != (len(probs),3) or probs.ndim != 1 or not np.isfinite(xyz).all() or not np.isfinite(probs).all() or np.any((probs<0)|(probs>1)):
+        raise ValueError('Invalid coordinates or probabilities')
+    if task not in FORMAL_CUTOFFS:
+        raise ValueError('Unknown task')
+    positions = np.arange(len(probs)) if eligible is None else np.flatnonzero(np.asarray(eligible,dtype=bool))
+    if eligible is not None and np.asarray(eligible).shape != probs.shape:
+        raise ValueError('Invalid eligibility mask')
+    if not len(positions): return []
+    if task == 'nucleic_acid':
+        selected = positions[probs[positions] >= .7542161000000001]
+    else:
+        order = np.lexsort((positions,-probs[positions]))
+        selected = np.sort(positions[order[:max(1,int(np.ceil(.1*len(positions))))]])
+    # Reuse exact connected-component and deterministic ranking implementation.
+    local = candidate_pockets(xyz[selected],probs[selected],0.0,FORMAL_CUTOFFS[task])
+    result=[]
+    for item in local:
+        indices = selected[np.asarray(item['residues'])-1]
+        values=probs[indices]
+        if task == 'nucleic_acid' or values.sum()<=0:
+            center=xyz[indices].mean(axis=0)
+        else:
+            center=np.average(xyz[indices],axis=0,weights=values)
+        base=values.mean() if task == 'nucleic_acid' else values.max()
+        result.append(dict(residues=(indices+1).tolist(),score=float(base+.05*np.log1p(len(indices))),
+            center_x=float(center[0]),center_y=float(center[1]),center_z=float(center[2]),
+            mean_probability=float(values.mean()),max_probability=float(values.max()),
+            candidate_type='pocket' if len(indices)>1 else 'isolated_residue'))
+    result.sort(key=lambda p:(-p['score'],-len(p['residues']),p['residues'][0]))
+    return [dict(rank=i,**p) for i,p in enumerate(result,1)]
+
+
+def all_task_pockets(coords, probabilities, thresholds, formal=False):
+    if formal:
+        return {task:formal_candidate_pockets(coords,probabilities[task],task) for task in FORMAL_CUTOFFS}
     return {task:[dict(p, candidate_type='pocket' if len(p['residues'])>1 else 'isolated_residue')
                   for p in candidate_pockets(coords, probabilities[task], thresholds[task], cutoff)]
             for task,cutoff in CUTOFFS.items()}

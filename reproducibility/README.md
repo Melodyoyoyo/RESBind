@@ -3,7 +3,12 @@
 The three Full models are in `models/v6_bidirectional_seed41`, `seed42` and
 `seed43` (each directory uses the full `v6_bidirectional_seed` prefix).
 Each bundle includes its own checkpoint, manifest and four verified scalers.
-The existing seed42 application bundle and its default thresholds are unchanged.
+The existing seed42 model bundle and its stored thresholds are unchanged.
+The application default is now `models/v6_bidirectional_ensemble`.
+`prob_*`, `threshold_*` and `pred_*` retain the seed42 residue operating point.
+`prob_*_seed41/42/43` export each seed's probabilities for independent residue
+evaluation. `pocket_prob_*` contains 0.4/0.2/0.4 weighted ensemble probabilities
+and is used for pocket selection, centers and ranking.
 Select a different bundle with the absolute `RESBIND_BUNDLE_DIR` environment variable.
 No refiner is used.
 
@@ -36,26 +41,31 @@ validation-MCC thresholds and are not the Table 1 operating points.
   ceil(10% of mask-valid residues) per protein. Components use CA distances
   <=8.5 angstrom; centers are probability-weighted CA centroids. Ranking is max
   probability + 0.05 ln(1+size).
-- Nucleic acid: each seed independently selects residues with its validation-F1
-  threshold and uses component radii 12/8/8 angstrom for seeds 41/42/43.
-- Small molecule: each seed independently selects residues with its validation-F1
-  threshold and uses radius 6 angstrom.
-- Nucleic acid and small-molecule centers are unweighted CA centroids. Ranking is
-  mean probability + 0.05 ln(1+size). Singletons remain eligible ranked candidates.
+- Nucleic acid: ensemble probabilities use the validation-F1 threshold
+  0.7542161000000001 and an 8 angstrom component radius. Centers are unweighted
+  CA centroids; ranking is mean probability + 0.05 ln(1+size).
+- Small molecule: ensemble probabilities select ceil(10% of eligible residues),
+  using radius 6 angstrom, probability-weighted CA centers and max probability
+  + 0.05 ln(1+size), as for Metal.
+- All tasks retain singletons as eligible ranked candidates.
   Ties prefer larger size, then smaller first residue position.
 - Reference centers are unweighted annotated-residue CA centroids in the same
   frozen ESMFold structures. Top-N uses the reference site count of each protein;
   every reference independently checks its nearest center among those candidates.
   Hits require strict DCC <10 angstrom. Recall is site-weighted.
-- Nucleic acid/small-molecule figures summarize three independently evaluated
-  recalls as mean and sample SD. Metal has one fixed ensemble recall.
+- All three tasks have one fixed ensemble recall; there is no seed SD.
+  Metal: 127/198 = 64.14%; nucleic acid: 78/107 = 72.90%; small molecule:
+  210/336 = 62.50%. The previous Figure 2 protocol is retained in
+  `paper_protocols_before_ensemble_freeze.json`.
 
-The application's default pocket code is a separate single-model workflow and
-does not implement these full Figure 2 benchmark settings. These additions do
-not claim a full released-package Figure 2 replay or distribution of all original
-benchmark features/annotations. Full-cohort input acquisition remains outstanding.
-Metal parameters were chosen after prior test exposure; freezing them does not
-remove that selection limitation.
+The application's default pocket code now implements these Figure 2 transformations.
+The benchmark uses task masks defining eligible residues. In a new unlabeled
+protein all modeled residues are eligible. Replaying benchmark evaluation must
+preserve those masks; `formal_candidate_pockets` accepts an eligibility mask.
+Full-cohort raw feature/annotation distribution and fresh released-package
+inference remain outstanding. Metal parameters and the nucleic-acid 8 angstrom
+radius were chosen after prior test exposure; freezing does not remove that
+selection limitation.
 
 ## Verification scope
 

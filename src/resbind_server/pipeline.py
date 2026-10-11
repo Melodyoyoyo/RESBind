@@ -15,7 +15,7 @@ import pandas as pd
 from .domain import PredictionArtifacts
 from .fasta import parse_single_fasta
 from .features import load_netsurfp_table, load_prott5_npz
-from .pockets import all_task_pockets, CUTOFFS, METHOD
+from .pockets import all_task_pockets, CUTOFFS, METHOD, FORMAL_CUTOFFS, FORMAL_METHOD
 from .structure import (
     coordinates,
     parse_pdb_ca,
@@ -94,7 +94,7 @@ class PredictionPipeline:
             "structure": {"mode": "uploaded" if pdb_path else "generated", "sha256": _sha256_bytes(pdb_bytes) if pdb_path else None},
         }
         job_key = json.dumps({
-            "pipeline_schema": 3, "pocket_method": METHOD, "protein_id": record.protein_id,
+            "pipeline_schema": 3, "pocket_method": FORMAL_METHOD if getattr(self.services.predictor,'formal_pockets',False) else METHOD, "protein_id": record.protein_id,
             "sequence": record.sequence, "bundle_hash": bundle_hash, "inputs": source_inputs,
         }, sort_keys=True).encode()
         job_id = _sha256_bytes(job_key)[:16]
@@ -157,16 +157,20 @@ class PredictionPipeline:
         _atomic_csv(predictions_path, predictions)
 
         stage("Clustering pockets")
+        formal = getattr(self.services.predictor, 'formal_pockets', False)
+        cutoffs = FORMAL_CUTOFFS if formal else CUTOFFS
+        pocket_thresholds = self.services.predictor.pocket_thresholds if formal else self.services.predictor.thresholds
         pockets_by_task = all_task_pockets(
             coordinates(residues),
-            {task: predictions[f"prob_{task}"].to_numpy() for task in CUTOFFS},
+            {task: predictions[f"{'pocket_prob' if formal else 'prob'}_{task}"].to_numpy() for task in cutoffs},
             self.services.predictor.thresholds,
+            formal=formal,
         )
         pocket_frame = pd.DataFrame(
             [
                 {
-                    **p, "task": task, "threshold": self.services.predictor.thresholds[task],
-                    "cutoff_angstrom": CUTOFFS[task], "size": len(p["residues"]),
+                    **p, "task": task, "threshold": pocket_thresholds[task],
+                    "cutoff_angstrom": cutoffs[task], "size": len(p["residues"]),
                     "residues": ";".join(map(str, p["residues"])),
                 }
                 for task, candidates in pockets_by_task.items() for p in candidates
@@ -199,7 +203,9 @@ class PredictionPipeline:
                 task: int(predictions[f"pred_{task}"].sum())
                 for task in ("metal", "nucleic_acid", "small_molecule")
             },
-            "pocket_method": METHOD,
+            "pocket_method": FORMAL_METHOD if formal else METHOD,
+            "residue_probability_source": "seed42; each seed also exported separately" if formal else "single selected model",
+            "pocket_probability_source": "weighted seeds41/42/43" if formal else "single selected model",
             "pockets_by_task": pockets_by_task,
             "pocket_counts": {task: sum(p["candidate_type"] == "pocket" for p in candidates)
                               for task, candidates in pockets_by_task.items()},

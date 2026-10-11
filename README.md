@@ -2,7 +2,9 @@
 
 Protein binding-residue prediction for metal, nucleic acid and small molecule
 tasks. This research release includes three Full checkpoints (seeds 41/42/43),
-with bidirectional contacts and no refiner. The application defaults to seed 42.
+with bidirectional contacts and no refiner. Pocket prediction defaults to the
+frozen three-model ensemble; residue operating-point tracks retain seed42,
+with all three seed probability tracks also exported.
 The bundle contains the
 unchanged trained checkpoint, four scalers and fixed validation-MCC thresholds.
 Input contacts are built from ESMFold C-alpha coordinates at <=10 Angstrom,
@@ -10,7 +12,7 @@ without self edges; pooling uses both directions. Pocket clustering is separate.
 
 For Table 1 evaluation and task-specific Figure 2 parameters, see
 [paper reproducibility](reproducibility/README.md). Table 1 summarizes independently
-evaluated seeds; only Figure 2 Metal uses weighted probability ensembling.
+evaluated seeds; Figure 2 now uses weighted probability ensembling for all tasks.
 
 ## Get the code and model
 
@@ -48,7 +50,7 @@ python -m pip install .
 resbind predict --fasta examples/P07014/sequence.fasta --pdb examples/P07014/structure.pdb --netsurfp-csv examples/P07014/netsurfp.csv --prott5-npz examples/P07014/prott5.npz --device cpu --out-dir results/P07014
 ```
 
-The default model path is models/v6_bidirectional_seed42 relative to the current
+The default model path is models/v6_bidirectional_ensemble relative to the current
 directory. From another directory set RESBIND_BUNDLE_DIR to the absolute bundle
 directory. RESBIND_JOB_ROOT and RESBIND_CACHE_ROOT select writable runtime paths.
 The Python wheel does not embed model weights; retain the models directory.
@@ -197,17 +199,21 @@ three tasks' spatial components in pockets.csv, with task, candidate_type,
 threshold and cutoff columns. Singletons are labeled isolated_residue and excluded
 from pocket_counts; they remain in the CSV and summary's pockets_by_task.
 Residue lists use 1-based sequence positions, not arbitrary PDB residue numbers.
-Metal/nucleic-acid/small-molecule cutoffs are 6/8/6 Angstrom, centers are unweighted
-C-alpha means, and ranking is mean probability + 0.05 ln(1 + residue count).
+Frozen ensemble cutoffs are 8.5/8/6 Angstrom. Metal and small molecule select
+the top 10%, use probability-weighted centers and max probability plus a size
+term. Nucleic acid uses its ensemble validation-F1 threshold, ordinary centroids
+and mean probability plus the same size term. See the paper protocol JSON.
 These candidate regions are not necessarily geometric cavities.
 
-All 15 website cases x 3 tasks matched the stored website outputs at tolerance
+Historically, all 15 website cases x 3 tasks matched the stored website outputs at tolerance
 1e-10 when given identical scores/structures; see pocket_parity_verification.json.
 Model contact construction remains bidirectional 10 Angstrom. Cache schema was
 bumped from 2 to 3, so old small-only outputs are not reused. The previous
 n_small_molecule_pockets summary field is replaced by task-wise pocket_counts
 and isolated_residue_counts; downstream readers must account for this schema change.
-Historical acceptance reports retain the limitations of their recorded revision.
+Historical acceptance reports retain the configuration and limitations of their
+recorded revision; they do not describe the new ensemble. The new candidate-code
+parity and supplied-feature runtime checks are in `reproducibility`.
 Predictions are not experimental validation. The optional Gradio interface is a local prototype.
 Remaining reproducibility work includes clean optional-feature dependency
 installation and complete training-data/split preparation documentation. This

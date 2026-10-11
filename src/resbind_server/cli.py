@@ -9,7 +9,7 @@ from .doctor import run_doctor
 from .features import ESMFoldProvider, NetSurfPProvider, ProtT5Provider
 from .pipeline import PipelineServices, PredictionPipeline
 from .settings import Settings
-from .v6 import V6Predictor
+from .v6 import load_predictor
 
 
 def build_pipeline(settings: Settings) -> PredictionPipeline:
@@ -17,7 +17,7 @@ def build_pipeline(settings: Settings) -> PredictionPipeline:
         prott5=ProtT5Provider(settings.device),
         esmfold=ESMFoldProvider(settings.device, settings.esmfold_chunk_size),
         netsurfp=NetSurfPProvider(settings),
-        predictor=V6Predictor(settings.bundle_dir, settings.device),
+        predictor=load_predictor(settings.bundle_dir, settings.device),
     )
     return PredictionPipeline(services, settings.job_root)
 

@@ -1,0 +1,23 @@
+{
+  "schema_version": 2,
+  "model_name": "RESBind three-model pocket ensemble",
+  "members": {
+    "41": "../v6_bidirectional_seed41",
+    "42": "../v6_bidirectional_seed42",
+    "43": "../v6_bidirectional_seed43"
+  },
+  "weights": {
+    "41": 0.4,
+    "42": 0.2,
+    "43": 0.4
+  },
+  "nuclear_threshold": 0.7542161000000001,
+  "residue_output_seed": 42,
+  "refiner": false,
+  "files": {
+    "41": "../v6_bidirectional_seed41/manifest.json",
+    "42": "../v6_bidirectional_seed42/manifest.json",
+    "43": "../v6_bidirectional_seed43/manifest.json"
+  },
+  "selection_history": "User froze after test exposure; nuclear radius8 was test-informed."
+}

@@ -46,55 +46,42 @@
       "center": "probability-weighted CA centroid",
       "ranking": "max probability + 0.05 ln(1+size)",
       "top_n_percent": 64.14141414141415,
-      "limitation": "Configuration chosen after prior test exposure; freezing does not remove that limitation."
+      "seed_sd": null,
+      "selection_history": "User froze after test exposure; nuclear radius8 was test-informed."
     },
     "nuclear": {
-      "aggregation": "Evaluate each seed independently; report mean and sample SD.",
+      "aggregation": "One weighted probability ensemble",
+      "weights": {
+        "41": 0.4,
+        "42": 0.2,
+        "43": 0.4
+      },
+      "selector": "validation_Fmax_threshold",
+      "selector_value": 0.7542161000000001,
+      "radius_angstrom": 8.0,
+      "min_cluster_size": 1,
       "center": "unweighted CA centroid",
       "ranking": "mean probability + 0.05 ln(1+size)",
-      "min_cluster_size": 1,
-      "per_seed": {
-        "41": {
-          "selector": "validation_Fmax_threshold",
-          "threshold": 0.8106613,
-          "radius_angstrom": 12.0
-        },
-        "42": {
-          "selector": "validation_Fmax_threshold",
-          "threshold": 0.767058,
-          "radius_angstrom": 8.0
-        },
-        "43": {
-          "selector": "validation_Fmax_threshold",
-          "threshold": 0.8263235,
-          "radius_angstrom": 8.0
-        }
-      },
-      "top_n_percent": 72.27414330218068
+      "top_n_percent": 72.89719626168224,
+      "seed_sd": null,
+      "selection_history": "User froze after test exposure; nuclear radius8 was test-informed."
     },
     "small": {
-      "aggregation": "Evaluate each seed independently; report mean and sample SD.",
-      "center": "unweighted CA centroid",
-      "ranking": "mean probability + 0.05 ln(1+size)",
-      "min_cluster_size": 1,
-      "per_seed": {
-        "41": {
-          "selector": "validation_Fmax_threshold",
-          "threshold": 0.7878349,
-          "radius_angstrom": 6.0
-        },
-        "42": {
-          "selector": "validation_Fmax_threshold",
-          "threshold": 0.8118499,
-          "radius_angstrom": 6.0
-        },
-        "43": {
-          "selector": "validation_Fmax_threshold",
-          "threshold": 0.85898334,
-          "radius_angstrom": 6.0
-        }
+      "aggregation": "One weighted probability ensemble",
+      "weights": {
+        "41": 0.4,
+        "42": 0.2,
+        "43": 0.4
       },
-      "top_n_percent": 64.58333333333334
+      "selector": "top_fraction",
+      "selector_value": 0.1,
+      "radius_angstrom": 6.0,
+      "min_cluster_size": 1,
+      "center": "probability-weighted CA centroid",
+      "ranking": "max probability + 0.05 ln(1+size)",
+      "top_n_percent": 62.5,
+      "seed_sd": null,
+      "selection_history": "User froze after test exposure; nuclear radius8 was test-informed."
     }
   },
   "checkpoint_provenance": {
@@ -117,5 +104,5 @@
       "tensor_equality_to_research_checkpoint": true
     }
   },
-  "scope": "Model bundles and paper parameters are supplied; full benchmark raw input distribution and a full released-package benchmark replay remain outstanding."
+  "scope": "Three model bundles, formal pocket code and Table 1 evaluation are supplied. Full-cohort fresh released-package inference/data distribution remain outstanding; candidate-code parity is separately verified against frozen predictions."
 }

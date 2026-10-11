@@ -120,7 +120,9 @@ the pocket-clustering cutoff to build contacts.
 Check summary.json, residue_predictions.csv, pockets.csv, structure.pdb and ZIP.
 Three residue tasks and all-task spatial candidates are returned. pockets.csv
 includes task and candidate_type; only multi-residue components count as pockets.
-Summary metadata records the 6/8/6 Angstrom cutoffs, ranking and centroid rule.
+Summary metadata records the frozen ensemble's 8.5/8/6 Angstrom cutoffs and
+task-specific selection, ranking and center rules. `pocket_prob_*` is ensembled;
+`prob_*` retains seed42 residue scores. All seed probability tracks are exported.
 No labels are required and no train/validation/test split is generated.
 Record the actual invocation route and supporting logs as specified in mcp.md.
 Keep distributable run records and report headings in English.

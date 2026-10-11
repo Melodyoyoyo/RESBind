@@ -1,0 +1,15 @@
+{
+  "date": "2026-10-11",
+  "saved_input_case": "P07014",
+  "rows": 238,
+  "ensemble_weights": [
+    0.4,
+    0.2,
+    0.4
+  ],
+  "seed42_residue_scores_unchanged": true,
+  "weighted_pocket_tracks_verified": true,
+  "csv_roundtrip_probability_tolerance": 1e-07,
+  "formal_pocket_pipeline_complete": true,
+  "unit_tests_passed": 11
+}

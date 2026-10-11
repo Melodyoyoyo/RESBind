@@ -153,3 +153,56 @@ class V6Predictor:
             out[f"threshold_{public}"] = threshold
             out[f"pred_{public}"] = probabilities[:, index] >= threshold
         return out
+
+
+class V6EnsemblePredictor:
+    """Separate pocket ensembles from the single-seed residue operating point."""
+    formal_pockets = True
+
+    def __init__(self, bundle_dir: Path, device: str = 'auto'):
+        self.bundle_dir = Path(bundle_dir)
+        self.manifest = json.loads((self.bundle_dir / 'manifest.json').read_text(encoding='utf-8'))
+        if self.manifest.get('schema_version') != 2:
+            raise ValueError('Expected ensemble schema 2')
+        self.members = {seed: V6Predictor(self.bundle_dir / relative, device)
+                        for seed, relative in self.manifest['members'].items()}
+        self.weights = self.manifest['weights']
+        if set(self.members) != {'41','42','43'} or set(self.weights) != set(self.members):
+            raise ValueError('Ensemble requires seeds 41/42/43')
+        if not np.isclose(sum(self.weights.values()), 1) or min(self.weights.values()) <= 0:
+            raise ValueError('Invalid ensemble weights')
+        self.bundle_hash = hashlib.sha256(json.dumps({
+            'ensemble': self.manifest,
+            'member_manifests': {s:m.bundle_hash for s,m in self.members.items()},
+            'checkpoints': {s:_file_hash(m.bundle_dir / m.manifest['files']['model']) for s,m in self.members.items()},
+        }, sort_keys=True).encode()).hexdigest()
+
+    @property
+    def thresholds(self):
+        return self.members['42'].thresholds
+
+    @property
+    def gate_weights(self):
+        return self.members['42'].gate_weights
+
+    @property
+    def pocket_thresholds(self):
+        return {'metal': None, 'nucleic_acid': self.manifest['nuclear_threshold'], 'small_molecule': None}
+
+    def predict(self, protein_id, sequence, embedding, surface_frame, contact_npz):
+        results = {s:m.predict(protein_id,sequence,embedding,surface_frame,contact_npz)
+                   for s,m in self.members.items()}
+        out = results['42'].copy()
+        for task in PUBLIC_TASKS.values():
+            for seed, frame in results.items():
+                pd.testing.assert_frame_equal(out[['protein_id','position','amino_acid']],
+                                              frame[['protein_id','position','amino_acid']])
+                out[f'prob_{task}_seed{seed}'] = frame[f'prob_{task}'].to_numpy()
+            out[f'pocket_prob_{task}'] = sum(self.weights[s] * f[f'prob_{task}'].to_numpy(dtype=float)
+                                                for s,f in results.items())
+        return out
+
+
+def load_predictor(bundle_dir: Path, device: str = 'auto'):
+    meta = json.loads((Path(bundle_dir) / 'manifest.json').read_text(encoding='utf-8'))
+    return (V6EnsemblePredictor if meta.get('schema_version') == 2 else V6Predictor)(bundle_dir, device)
