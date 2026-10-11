@@ -1,0 +1,122 @@
+{
+  "version": "0.2.2",
+  "protocol": "All three tasks independent seeds41/42/43; metric mean and sample SD ddof=1",
+  "full_cohort_released_evaluator_replay": [
+    {
+      "task": "metal",
+      "top_n_percent_mean": 62.79461279461279,
+      "top_n_percent_std": 2.871838738927944,
+      "top_n_plus_2_percent_mean": 70.87542087542089,
+      "top_n_plus_2_percent_std": 2.542031796387464,
+      "max_percent_mean": 76.26262626262627,
+      "max_percent_std": 2.672476071782406
+    },
+    {
+      "task": "nuclear",
+      "top_n_percent_mean": 72.27414330218068,
+      "top_n_percent_std": 2.158318763325711,
+      "top_n_plus_2_percent_mean": 74.76635514018692,
+      "top_n_plus_2_percent_std": 3.369674089218678,
+      "max_percent_mean": 77.25856697819314,
+      "max_percent_std": 4.610170899360976
+    },
+    {
+      "task": "small",
+      "top_n_percent_mean": 64.58333333333333,
+      "top_n_percent_std": 0.7874259854358909,
+      "top_n_plus_2_percent_mean": 73.31349206349206,
+      "top_n_plus_2_percent_std": 0.4546206046583269,
+      "max_percent_mean": 76.58730158730158,
+      "max_percent_std": 0.6195434522220735
+    }
+  ],
+  "seed_metrics": [
+    {
+      "task": "metal",
+      "seed": 41,
+      "n_sites": 198,
+      "n_proteins": 117,
+      "top_n_percent": 63.63636363636363,
+      "top_n_plus_2_percent": 73.23232323232324,
+      "max_percent": 78.28282828282829
+    },
+    {
+      "task": "nuclear",
+      "seed": 41,
+      "n_sites": 107,
+      "n_proteins": 65,
+      "top_n_percent": 71.02803738317756,
+      "top_n_plus_2_percent": 71.96261682242991,
+      "max_percent": 71.96261682242991
+    },
+    {
+      "task": "small",
+      "seed": 41,
+      "n_sites": 336,
+      "n_proteins": 205,
+      "top_n_percent": 64.88095238095238,
+      "top_n_plus_2_percent": 73.80952380952381,
+      "max_percent": 76.78571428571429
+    },
+    {
+      "task": "metal",
+      "seed": 42,
+      "n_sites": 198,
+      "n_proteins": 117,
+      "top_n_percent": 65.15151515151516,
+      "top_n_plus_2_percent": 71.21212121212122,
+      "max_percent": 77.27272727272727
+    },
+    {
+      "task": "nuclear",
+      "seed": 42,
+      "n_sites": 107,
+      "n_proteins": 65,
+      "top_n_percent": 71.02803738317756,
+      "top_n_plus_2_percent": 73.83177570093457,
+      "max_percent": 79.43925233644859
+    },
+    {
+      "task": "small",
+      "seed": 42,
+      "n_sites": 336,
+      "n_proteins": 205,
+      "top_n_percent": 63.69047619047619,
+      "top_n_plus_2_percent": 72.91666666666666,
+      "max_percent": 77.08333333333334
+    },
+    {
+      "task": "metal",
+      "seed": 43,
+      "n_sites": 198,
+      "n_proteins": 117,
+      "top_n_percent": 59.59595959595959,
+      "top_n_plus_2_percent": 68.18181818181817,
+      "max_percent": 73.23232323232324
+    },
+    {
+      "task": "nuclear",
+      "seed": 43,
+      "n_sites": 107,
+      "n_proteins": 65,
+      "top_n_percent": 74.76635514018692,
+      "top_n_plus_2_percent": 78.50467289719626,
+      "max_percent": 80.37383177570094
+    },
+    {
+      "task": "small",
+      "seed": 43,
+      "n_sites": 336,
+      "n_proteins": 205,
+      "top_n_percent": 65.17857142857143,
+      "top_n_plus_2_percent": 73.21428571428571,
+      "max_percent": 75.89285714285714
+    }
+  ],
+  "runtime_case": "P07014",
+  "all_three_seed_candidates_exported": true,
+  "default_visualization_seed": 42,
+  "seed_probabilities_unchanged": true,
+  "unit_tests_passed": 11,
+  "limitations": "Benchmark uses archived probabilities and frozen structures/annotations, not fresh full-cohort inference; metal postprocessing retains prior test exposure. Earlier ensemble verification files are historical."
+}

@@ -1,15 +1,10 @@
 {
   "schema_version": 2,
-  "model_name": "RESBind metal ensemble and independent nucleic-acid/small-molecule models",
+  "model_name": "RESBind three independent models",
   "members": {
     "41": "../v6_bidirectional_seed41",
     "42": "../v6_bidirectional_seed42",
     "43": "../v6_bidirectional_seed43"
-  },
-  "weights": {
-    "41": 0.4,
-    "42": 0.2,
-    "43": 0.4
   },
   "residue_output_seed": 42,
   "refiner": false,
@@ -18,6 +13,6 @@
     "42": "../v6_bidirectional_seed42/manifest.json",
     "43": "../v6_bidirectional_seed43/manifest.json"
   },
-  "selection_history": "Metal configuration frozen after test exposure; other tasks restored to original protocol.",
-  "pocket_protocol": "Metal ensemble unchanged; other tasks independent validation-F1 thresholds and original radii."
+  "selection_history": "Metal retains test-exposed top10% radius8.5 weighted-center/max-score postprocessing.",
+  "pocket_protocol": "All tasks independently evaluate seeds41/42/43; aggregate metrics by mean and sample SD ddof=1. Never average probabilities."
 }

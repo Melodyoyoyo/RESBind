@@ -67,6 +67,9 @@ def main() -> None:
             args.out_dir.mkdir(parents=True, exist_ok=True)
             for source in [result.predictions_csv, result.pockets_csv, result.structure_pdb, result.summary_json, result.result_zip]:
                 (args.out_dir / source.name).write_bytes(source.read_bytes())
+            independent = result.pockets_csv.with_name('pockets_independent_seeds.csv')
+            if independent.exists():
+                (args.out_dir / independent.name).write_bytes(independent.read_bytes())
             print(args.out_dir / result.summary_json.name)
         else:
             print(result.summary_json)

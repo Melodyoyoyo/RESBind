@@ -120,7 +120,7 @@ the pocket-clustering cutoff to build contacts.
 Check summary.json, residue_predictions.csv, pockets.csv, structure.pdb and ZIP.
 Three residue tasks and all-task spatial candidates are returned. pockets.csv
 includes task and candidate_type; only multi-residue components count as pockets.
-Summary metadata records task-specific selection, ranking and center rules. Metal uses an 8.5 Angstrom ensemble; other tasks use independent seeds with original radii and validation-F1 thresholds. pockets_independent_seeds.csv in the result ZIP contains all three candidate sets. `pocket_prob_metal` is ensembled; other pocket tracks retain seed42 for visualization;
+Summary metadata records task-specific selection, ranking and center rules. All tasks use independent seeds. Metal retains top10% selection and 8.5 Angstrom clustering; other tasks retain original radii and validation-F1 thresholds. pockets_independent_seeds.csv in the result ZIP contains all three candidate sets. All `pocket_prob_*` tracks retain seed42 for visualization;
 `prob_*` retains seed42 residue scores. All seed probability tracks are exported.
 No labels are required and no train/validation/test split is generated.
 Record the actual invocation route and supporting logs as specified in mcp.md.

@@ -1,15 +1,13 @@
-# Current pocket protocol (restored 2026-10-11)
+# Current pocket release: v0.2.2
 
-Metal remains the 0.4/0.2/0.4 probability ensemble, 8.5 A top10% weighted-center/max-score pipeline. Nucleic acid and small molecule are independently evaluated seeds41/42/43 with validation-F1 thresholds, ordinary CA centroids and mean-probability-plus-size ranking. Nuclear radii are 12/8/8 A; small-molecule radii are 6/6/6 A. Figure2 reports 72.27 +/- 2.16% and 64.58 +/- 0.79% respectively, with metal 64.14%. Runtime exports pockets_independent_seeds.csv; pockets.csv visualizes seed42 for those two tasks. Table1 is unchanged. See paper_protocols.json for exact rules.
-
-## Superseded documentation from the previous revision
+All three tasks independently evaluate seeds41/42/43 and report metric mean +/- sample SD (ddof=1). Probabilities and candidate sets are not averaged or pooled. Strict DCC<10 A Top-N: Metal 62.79 +/-2.87%, nucleic acid 72.27 +/-2.16%, small molecule 64.58 +/-0.79%. Metal retains top10%, radius8.5, weighted centers and max-score-plus-size; other tasks retain validation-F1 thresholds, original radii, unweighted centers and mean-score-plus-size. Checkpoints and Table1 unchanged. The default bundle directory and predictor class retain legacy ensemble names only for path/API compatibility.
 
 # RESBind
 
 Protein binding-residue prediction for metal, nucleic acid and small molecule
 tasks. This research release includes three Full checkpoints (seeds 41/42/43),
 with bidirectional contacts and no refiner. Pocket prediction defaults to the
-metal-only three-model ensemble with independent nucleic-acid and small-molecule pockets; residue operating-point tracks retain seed42,
+three independent models for all pocket tasks; residue operating-point tracks retain seed42,
 with all three seed probability tracks also exported.
 The bundle contains the
 unchanged trained checkpoint, four scalers and fixed validation-MCC thresholds.
@@ -18,7 +16,7 @@ without self edges; pooling uses both directions. Pocket clustering is separate.
 
 For Table 1 evaluation and task-specific Figure 2 parameters, see
 [paper reproducibility](reproducibility/README.md). Table 1 summarizes independently
-evaluated seeds; Figure 2 now uses weighted probability ensembling for all tasks.
+evaluated seeds; the current pocket protocol likewise evaluates all tasks independently per seed.
 
 ## Get the code and model
 
@@ -205,7 +203,7 @@ three tasks' spatial components in pockets.csv, with task, candidate_type,
 threshold and cutoff columns. Singletons are labeled isolated_residue and excluded
 from pocket_counts; they remain in the CSV and summary's pockets_by_task.
 Residue lists use 1-based sequence positions, not arbitrary PDB residue numbers.
-Metal retains 8.5 Angstrom clustering, top10% selection, weighted centers and max probability plus a size term. Other tasks use independent validation-F1 thresholds, ordinary centroids and mean probability plus the size term: nuclear radii 12/8/8 Angstrom and small radii 6/6/6. The default visualization uses seed42; all per-seed candidates are exported in the ZIP. See the paper protocol JSON.
+All tasks retain independent seed probabilities. Metal retains 8.5 Angstrom clustering, top10% selection, weighted centers and max probability plus a size term. Other tasks use independent validation-F1 thresholds, ordinary centroids and mean probability plus the size term: nuclear radii 12/8/8 Angstrom and small radii 6/6/6. The default visualization uses seed42 for all tasks; all per-seed candidates are exported in the ZIP. See the paper protocol JSON.
 These candidate regions are not necessarily geometric cavities.
 
 Historically, all 15 website cases x 3 tasks matched the stored website outputs at tolerance
@@ -215,7 +213,7 @@ bumped from 2 to 3, so old small-only outputs are not reused. The previous
 n_small_molecule_pockets summary field is replaced by task-wise pocket_counts
 and isolated_residue_counts; downstream readers must account for this schema change.
 Historical acceptance reports retain the configuration and limitations of their
-recorded revision; they do not describe the new ensemble. The new candidate-code
+recorded revision; they do not describe the current independent-seed protocol. The new candidate-code
 parity and supplied-feature runtime checks are in `reproducibility`.
 Predictions are not experimental validation. The optional Gradio interface is a local prototype.
 Remaining reproducibility work includes clean optional-feature dependency

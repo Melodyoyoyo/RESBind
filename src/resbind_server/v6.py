@@ -156,23 +156,20 @@ class V6Predictor:
 
 
 class V6EnsemblePredictor:
-    """Separate pocket ensembles from the single-seed residue operating point."""
+    """Compatibility class name: load three models, export independent probabilities."""
     formal_pockets = True
 
     def __init__(self, bundle_dir: Path, device: str = 'auto'):
         self.bundle_dir = Path(bundle_dir)
         self.manifest = json.loads((self.bundle_dir / 'manifest.json').read_text(encoding='utf-8'))
         if self.manifest.get('schema_version') != 2:
-            raise ValueError('Expected ensemble schema 2')
+            raise ValueError('Expected three-model bundle schema 2')
         self.members = {seed: V6Predictor(self.bundle_dir / relative, device)
                         for seed, relative in self.manifest['members'].items()}
-        self.weights = self.manifest['weights']
-        if set(self.members) != {'41','42','43'} or set(self.weights) != set(self.members):
-            raise ValueError('Ensemble requires seeds 41/42/43')
-        if not np.isclose(sum(self.weights.values()), 1) or min(self.weights.values()) <= 0:
-            raise ValueError('Invalid ensemble weights')
+        if set(self.members) != {'41','42','43'}:
+            raise ValueError('Independent evaluation requires seeds 41/42/43')
         self.bundle_hash = hashlib.sha256(json.dumps({
-            'ensemble': self.manifest,
+            'multiseed': self.manifest,
             'member_manifests': {s:m.bundle_hash for s,m in self.members.items()},
             'checkpoints': {s:_file_hash(m.bundle_dir / m.manifest['files']['model']) for s,m in self.members.items()},
         }, sort_keys=True).encode()).hexdigest()
@@ -198,10 +195,7 @@ class V6EnsemblePredictor:
                 pd.testing.assert_frame_equal(out[['protein_id','position','amino_acid']],
                                               frame[['protein_id','position','amino_acid']])
                 out[f'prob_{task}_seed{seed}'] = frame[f'prob_{task}'].to_numpy()
-            out[f'pocket_prob_{task}'] = sum(self.weights[s] * f[f'prob_{task}'].to_numpy(dtype=float)
-                                                for s,f in results.items())
-            if task != 'metal':
-                out[f'pocket_prob_{task}'] = out[f'prob_{task}_seed42']
+            out[f'pocket_prob_{task}'] = out[f'prob_{task}_seed42']
         return out
 
 

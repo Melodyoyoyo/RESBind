@@ -33,21 +33,16 @@
     "reference_center": "unweighted annotated-residue CA centroid in frozen ESMFold coordinates",
     "matching": "Each reference independently matches nearest ranked candidate among Top-N; N is reference site count per protein.",
     "metal": {
-      "aggregation": "One weighted probability ensemble",
-      "weights": {
-        "41": 0.4,
-        "42": 0.2,
-        "43": 0.4
-      },
+      "aggregation": "Evaluate each seed independently; report mean and sample SD ddof=1.",
       "selector": "top_fraction",
       "selector_value": 0.1,
       "radius_angstrom": 8.5,
       "min_cluster_size": 1,
       "center": "probability-weighted CA centroid",
       "ranking": "max probability + 0.05 ln(1+size)",
-      "top_n_percent": 64.14141414141415,
-      "seed_sd": null,
-      "selection_history": "User froze after test exposure; nuclear radius8 was test-informed."
+      "top_n_percent": 62.794612794612796,
+      "seed_sd": 2.8718387389279427,
+      "selection_history": "Metal postprocessing retains its prior test-exposure limitation."
     },
     "nuclear": {
       "aggregation": "Evaluate each seed independently; report mean and sample SD.",
@@ -118,5 +113,22 @@
       "tensor_equality_to_research_checkpoint": true
     }
   },
-  "scope": "Metal ensemble retained; nuclear/small restored to original independent-seed evaluation. Runtime exports all three candidate sets; seed42 is the default visualization."
+  "scope": "Current pocket protocol evaluates all tasks independently per seed. Metal retains its distinct postprocessing. Table1 residue aggregation and checkpoints unchanged. Previous ensemble configuration retained as history.",
+  "previous_metal_probability_ensemble": {
+    "aggregation": "One weighted probability ensemble",
+    "weights": {
+      "41": 0.4,
+      "42": 0.2,
+      "43": 0.4
+    },
+    "selector": "top_fraction",
+    "selector_value": 0.1,
+    "radius_angstrom": 8.5,
+    "min_cluster_size": 1,
+    "center": "probability-weighted CA centroid",
+    "ranking": "max probability + 0.05 ln(1+size)",
+    "top_n_percent": 64.14141414141415,
+    "seed_sd": null,
+    "selection_history": "User froze after test exposure; nuclear radius8 was test-informed."
+  }
 }

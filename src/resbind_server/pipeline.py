@@ -185,11 +185,11 @@ class PredictionPipeline:
                 task: {seed: formal_candidate_pockets(coordinates(residues),
                     predictions[f'prob_{task}_seed{seed}'].to_numpy(), task, seed=seed)
                     for seed in ('41', '42', '43')}
-                for task in SEED_POCKET_RULES
+                for task in FORMAL_CUTOFFS
             }
             independent_rows = [dict(p, task=task, seed=int(seed),
-                threshold=SEED_POCKET_RULES[task][seed][0],
-                cutoff_angstrom=SEED_POCKET_RULES[task][seed][1],
+                threshold=None if task=='metal' else SEED_POCKET_RULES[task][seed][0],
+                cutoff_angstrom=8.5 if task=='metal' else SEED_POCKET_RULES[task][seed][1],
                 residues=';'.join(map(str,p['residues'])))
                 for task, seeds in independent_pockets.items()
                 for seed, candidates in seeds.items() for p in candidates]
@@ -222,7 +222,7 @@ class PredictionPipeline:
             },
             "pocket_method": FORMAL_METHOD if formal else METHOD,
             "residue_probability_source": "seed42; each seed also exported separately" if formal else "single selected model",
-            "pocket_probability_source": "Metal weighted seeds41/42/43; other tasks independent seeds (seed42 visualization)" if formal else "single selected model",
+            "pocket_probability_source": "All tasks independent seeds41/42/43; seed42 visualization, no probability ensemble" if formal else "single selected model",
             "independent_pockets_by_task_and_seed": independent_pockets,
             "pockets_by_task": pockets_by_task,
             "pocket_counts": {task: sum(p["candidate_type"] == "pocket" for p in candidates)

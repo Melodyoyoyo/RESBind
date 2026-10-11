@@ -11,13 +11,12 @@ The public repository can be cloned or downloaded without a GitHub account.
 Never substitute a similarly named model if access fails.
 This is a development candidate, not a certified turnkey public service.
 
-Preserve the metal-only probability ensemble (seeds41/42/43, weights
-0.4/0.2/0.4) and independent-seed nucleic-acid/small-molecule pockets, no refiner, bidirectional contacts built from ESMFold C-alpha
+Preserve independent seeds41/42/43 for all three pocket tasks; no probability averaging and no refiner, bidirectional contacts built from ESMFold C-alpha
 coordinates at <=10 Angstrom without self edges. Keep checkpoint, scalers and
 validation thresholds together. Do not retrain or alter thresholds for ordinary prediction.
 Use `models/v6_bidirectional_ensemble` by default. Residue operating-point tracks
 retain seed42; per-seed probability columns support Table 1 evaluation. Pocket
-probabilities are ensembled only for metal; other tasks use independent seeds and validation-F1 thresholds. See `reproducibility/paper_protocols.json`
+probabilities remain independent for every task. Metal uses top10% selection; other tasks use validation-F1 thresholds. See `reproducibility/paper_protocols.json`
 for exact task-specific selection, centers, ranking and selection history.
 
 ## Route the request

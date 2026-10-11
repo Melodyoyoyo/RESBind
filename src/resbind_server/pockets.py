@@ -50,34 +50,25 @@ def candidate_pockets(coords, probabilities, threshold, cutoff):
 
 
 FORMAL_CUTOFFS = {'metal':8.5, 'nucleic_acid':8.0, 'small_molecule':6.0}
-FORMAL_METHOD = {
-    'version':'three_task_ensemble_20261011', 'weights':{'41':.4,'42':.2,'43':.4},
-    'cutoffs_angstrom':FORMAL_CUTOFFS,
-    'metal_small_selector':'ceil(10% of eligible residues); probability descending, position ascending',
-    'nuclear_selector':'probability >= 0.7542161000000001 (ensemble validation F1 threshold)',
-    'metal_small_center':'probability-weighted CA centroid', 'nuclear_center':'unweighted CA centroid',
-    'metal_small_ranking':'max probability + 0.05 ln(1+size)',
-    'nuclear_ranking':'mean probability + 0.05 ln(1+size)',
-    'singleton_policy':'retained in ranked candidates and marked isolated_residue',
-    'dcc_evaluation':'strict <10 angstrom; requires reference annotations',
-    'selection_history':'Frozen after prior test exposure; nuclear radius8 chosen after test comparison.',
-}
-
-
 SEED_POCKET_RULES = {
     'nucleic_acid': {'41': (.8106613, 12.), '42': (.767058, 8.), '43': (.8263235, 8.)},
     'small_molecule': {'41': (.7878349, 6.), '42': (.8118499, 6.), '43': (.85898334, 6.)},
 }
-FORMAL_METHOD.update(version='metal_ensemble_other_tasks_independent_20261011',
-    nuclear_small_aggregation='Independent seeds; benchmark mean and sample SD; seed42 for default visualization',
-    nuclear_small_rules=SEED_POCKET_RULES,
-    nuclear_small_center='unweighted CA centroid',
-    nuclear_small_ranking='mean probability + 0.05 ln(1+size)')
-FORMAL_METHOD.pop('nuclear_selector', None)
-FORMAL_METHOD['metal_small_selector'] = 'Metal only: ceil(10% of eligible residues)'
-FORMAL_METHOD['metal_small_center'] = 'Metal only: probability-weighted CA centroid'
-FORMAL_METHOD['metal_small_ranking'] = 'Metal only: max probability + 0.05 ln(1+size)'
-FORMAL_METHOD['selection_history'] = 'Metal retains test-exposed configuration; other tasks restored to original independent-seed protocol.'
+FORMAL_METHOD = {
+    'version': 'all_tasks_independent_seeds_20261011',
+    'aggregation': 'Evaluate each seed independently; mean and sample SD ddof=1 of metrics, never average probabilities',
+    'default_visualization_seed': 42,
+    'metal_selector': 'ceil(10% of eligible residues); probability descending, position ascending',
+    'metal_radius_angstrom': 8.5,
+    'metal_center': 'probability-weighted CA centroid',
+    'metal_ranking': 'max probability + 0.05 ln(1+size)',
+    'nuclear_small_rules': SEED_POCKET_RULES,
+    'nuclear_small_center': 'unweighted CA centroid',
+    'nuclear_small_ranking': 'mean probability + 0.05 ln(1+size)',
+    'singleton_policy': 'retained in ranked candidates and marked isolated_residue',
+    'dcc_evaluation': 'strict <10 angstrom; requires reference annotations',
+    'selection_history': 'Metal postprocessing retains prior test-exposure limitation.',
+}
 
 
 def formal_candidate_pockets(coords, probabilities, task, eligible=None, seed=42):
