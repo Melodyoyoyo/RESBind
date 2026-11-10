@@ -1,16 +1,23 @@
+# Python caches and package build output
 __pycache__/
 *.py[cod]
 *.egg-info/
 build/
 dist/
+.pytest_cache/
+
+# Local Python environments
 .venv/
 venv/
-.pytest_cache/
+
+# Generated prediction outputs and working directories
 results/
 runtime/
 cache/
 jobs/
 resbind_run_*/
+
+# Local configuration and credentials
 .env
 .env.*
 *.pem
