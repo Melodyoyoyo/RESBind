@@ -67,7 +67,6 @@ FORMAL_METHOD = {
     'nuclear_small_ranking': 'mean probability + 0.05 ln(1+size)',
     'singleton_policy': 'retained in ranked candidates and marked isolated_residue',
     'dcc_evaluation': 'strict <10 angstrom; requires reference annotations',
-    'selection_history': 'Metal postprocessing retains prior test-exposure limitation.',
 }
 
 
