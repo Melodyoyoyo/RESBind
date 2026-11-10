@@ -13,6 +13,5 @@
     "42": "../v6_bidirectional_seed42/manifest.json",
     "43": "../v6_bidirectional_seed43/manifest.json"
   },
-  "selection_history": "Metal retains test-exposed top10% radius8.5 weighted-center/max-score postprocessing.",
   "pocket_protocol": "All tasks independently evaluate seeds41/42/43; aggregate metrics by mean and sample SD ddof=1. Never average probabilities."
 }
