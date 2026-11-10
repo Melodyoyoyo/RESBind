@@ -13,7 +13,7 @@ Repository: https://github.com/Melodyoyoyo/RESBind
 - **MCP integration:** follow [mcp.md](references/mcp.md) to configure the local server and use its prediction tools.
 - **Training or evaluation:** follow [labeled-data.md](references/labeled-data.md) for dataset requirements and entry points.
 
-Use an existing checkout when available. Otherwise, clone the repository or download its ZIP archive. Install RESBind in a dedicated Python environment and run the bundled P07014 example.
+For a new installation, clone the repository or download its latest main-branch ZIP archive. For an existing installation, check for updates before prediction unless the user requests a specific revision. Update a clean main-branch checkout with `git pull --ff-only`; preserve local changes and use a separate checkout when needed. Read the Skill and referenced instructions from the updated repository, including when setup began with the website Skill ZIP. Install RESBind in a dedicated Python environment and run the bundled P07014 example. After an update, reinstall the package in that environment and restart any running MCP server so it loads the current model configuration.
 
 ## Inputs and compute
 
