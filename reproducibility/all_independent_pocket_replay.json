@@ -118,5 +118,5 @@
   "default_visualization_seed": 42,
   "seed_probabilities_unchanged": true,
   "unit_tests_passed": 11,
-  "limitations": "Benchmark uses archived probabilities and frozen structures/annotations, not fresh full-cohort inference; metal postprocessing retains prior test exposure. Earlier ensemble verification files are historical."
+  "limitations": "Benchmark uses archived probabilities and frozen structures/annotations, not fresh full-cohort inference. Earlier ensemble verification files are historical."
 }
