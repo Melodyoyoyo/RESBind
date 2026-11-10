@@ -1,27 +1,25 @@
-# Evaluation and training routing
+# Training and evaluation
 
-These modes require additional dataset validation and are not turnkey MCP tools.
-Before execution, ask whether the user wants frozen-model evaluation, exact
-training reproduction, fine-tuning, or new training. Do not treat these as synonyms.
+RESBind includes training code and scripts for evaluating residue predictions and spatial binding-site candidates.
 
-Require per-protein sequence and per-residue labels for the relevant tasks, their
-provenance, numbering/chain mapping, and an explicit missing-label mask. Unknown
-or unannotated does not mean experimentally negative. Check length and index
-alignment before building dataset tables. FASTA headers are not a label schema.
+## Dataset preparation
 
-For frozen evaluation, preserve the trained checkpoint and validation thresholds;
-report overlap with known training/validation data when that information exists.
-Do not optimize thresholds on the test labels. If training membership is unknown,
-state that rather than calling a new accession an independent test sample.
+Prepare protein sequences, per-residue labels for the relevant ligand classes, missing-label masks, and sequence-to-structure mappings. Keep the protein identifiers and residue positions consistent across feature tables, embeddings, contacts, and labels.
 
-For original-run reproduction, retain the original train/validation/test membership
-and preprocessing fit scope. For a new dataset, agree a protein/homology-aware split
-policy, family/identity criterion and seed before generating splits. Do not randomly
-split residues or silently replace user-provided splits. Fit scalers only on training
-data; select thresholds/model using validation, then evaluate once on held-out test.
+Use explicit training, validation, and test partitions. Fit preprocessing on the training partition and use the validation partition for model selection. Preserve missing-label masks when computing metrics.
 
-The repository includes `training/train_v6.py`; inspect `--help` and its required
-split-specific table/embedding/contact schema before adapting data. Training input
-packaging and reproduction are not validated by the CPU inference smoke test.
-Report a concrete missing-input/schema issue instead of fabricating labels, splits,
-feature tables or claiming an unexecuted training run succeeded.
+## Training
+
+Install the training dependencies:
+
+```sh
+python -m pip install ".[training]"
+```
+
+The training entry point is in the repository's `training/` directory. Its command-line help describes the split-specific feature tables, embedding and contact directories, output location, and training options. Supply the prepared data paths when starting a run.
+
+## Evaluation
+
+Use the [benchmark evaluation scripts](../../../reproducibility/README.md) to evaluate residue-level predictions or replay binding-site localization from saved probabilities and structures. Keep the evaluation cohort, annotations, and coordinate mappings consistent across compared methods.
+
+Report task-specific metrics with the dataset definition and aggregation procedure. Store the input files and run configuration alongside the results.
