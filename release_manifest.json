@@ -45,11 +45,11 @@
     "refiner": false,
     "bidirectional_contacts": true,
     "contact_structure": "ESMFold",
-    "contact_cutoff_angstrom": 10.0
+    "contact_cutoff_angstrom": 10
   },
   "files": {
-    ".gitattributes": "2905ef8438226ea1910edad7f754d39f3b3bc3d9cb56a741acd89c01c6fc150c",
-    ".gitignore": "8de694fbe7d7f35817862e76e5c4e6398fa6b2745335dd5f015ef34f455a8d2b",
+    ".gitattributes": "40a04c39beb9e11f4dba43d3c957c3b3ae37a87b5304ce9295887a8207cb32fe",
+    ".gitignore": "b6e962032b39c0052d6b7e1c71628d62c7fffb096ffb595797e0b6b65546087a",
     "LICENSE": "4b3fc0faf23f5005f712bc30dce7779035437ea794c2d60f696d2c70ba3a708f",
     "README.md": "5cd12b15dd2b8651644ef39a0ad1934d90a82f916215378f8ff5a8a16b996c60",
     "THIRD_PARTY_NOTICES.md": "e90636c49a62aa5e9ac89807e362fb73ead3530698ac25dd71532cfa826430c2",
@@ -86,7 +86,7 @@
     "reproducibility/paper_protocols.json": "21dc6deb0199fffaecd1bda8b1c0c0821cd8009de0d2bb6bf02a500db9ce39d0",
     "reproducibility/paper_protocols_before_ensemble_freeze.json": "546947df397c41bc47cc056a3c513f01f96a62d4d7d69a2fcc47eade8c6c20fe",
     "reproducibility/release_three_seed_verification.json": "6be3cbb5e27e925e7ffbcd04427cfc0db7a5b1c0d8fe420c880a99f284a9ff29",
-    "requirements-tested-windows-py312.txt": "aaad0e2ca963e916e849f492562b088952bd8c688a2d4572386017c5f85e374d",
+    "requirements-tested-windows-py312.txt": "984acc74dc7a337ab6dcb4d7d8d2dc6019f4a10077d8b23cfa45f55e9787a29c",
     "scripts/update_release_manifest.py": "122c01aceac5e2ba5d01dc57d1cbe3a3b9e42caf71db506b6c263710194647a4",
     "skills/resbind/SKILL.md": "78c795e03740499100f78b07b4349603ae9dc46ca78d8df6e69247f43fd2d2d8",
     "skills/resbind/references/compute.md": "c600325fc0ff5108fb689d3cbb5481c8017c2e88642d6bc46218c5059aec5730",
@@ -119,6 +119,9 @@
     "reproducibility/restored_pocket_verification.json": "51b92d4dfcc86d186d219ffb30e8798c139b75c8cb56e569abf3ffae7908a1cd",
     "reproducibility/restored_runtime_verification.json": "0f5c83021fbaef304ba1cd61d66d6eff89b6b72f7cb6ef068ce4039c856386fe",
     "reproducibility/evaluate_pockets.py": "6e9224a38eb47daafb93ad59b6e3851e8c6c0169cbfe19a5d57324a1cb856509",
-    "reproducibility/all_independent_pocket_replay.json": "a15dca6102ce216e8a5eb3ea8dd415fdf8597008f73766a1017b436f26bfb1e5"
+    "reproducibility/all_independent_pocket_replay.json": "a15dca6102ce216e8a5eb3ea8dd415fdf8597008f73766a1017b436f26bfb1e5",
+    "examples/P07014/README.md": "5e813bd5678ee87086aa7e228703130724fa3bb06f4c3e498d589f5fdfbe220a",
+    "training/README.md": "961201779aaa32d932ed23ae005d798c14e6c019a56bb6847bb9207745e1a267",
+    "scripts/README.md": "b7cb22201bed058dea9e4c0d4788340f2edd6cffd858057c2e33f2ed8b1294ec"
   }
 }
