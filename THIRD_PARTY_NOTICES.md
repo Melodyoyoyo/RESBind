@@ -2,7 +2,7 @@
 
 ## RESBind license
 
-The [MIT License](LICENSE) covers the original RESBind code and documentation, and the checkpoint and scalers in `models/v6_bidirectional_seed42` to the extent owned by the copyright holder. Third-party software, model weights, sequences, and derived example features retain their applicable terms.
+The [MIT License](LICENSE) covers the original RESBind code and documentation, and the bundled seed-42 checkpoint and scalers to the extent owned by the copyright holder. Third-party software, model weights, sequences, and derived example features retain their applicable terms.
 
 ## Upstream resources
 
