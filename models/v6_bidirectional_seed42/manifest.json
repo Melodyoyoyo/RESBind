@@ -7,11 +7,11 @@
     "nuclear",
     "small"
   ],
-  "threshold_mode": "val_mcc",
+  "threshold_mode": "val_f1",
   "thresholds": {
-    "metal": 0.9546052861213684,
-    "nuclear": 0.77,
-    "small": 0.79
+    "metal": 0.94337624,
+    "nuclear": 0.76705800,
+    "small": 0.81184990
   },
   "surface_columns": [
     "protein_length",
