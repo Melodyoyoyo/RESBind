@@ -1,15 +1,31 @@
-# Paper reproduction
+# Benchmark evaluation
 
-The default three-checkpoint bundle evaluates all three pocket tasks independently per seed. There is no probability ensemble. No refiner is used. The exact selectors, radii, centers, ranking, reference/matching rules and Table1 thresholds are in paper_protocols.json.
+This directory contains evaluation scripts and protocol definitions for RESBind's residue-level and binding-site localization benchmarks.
 
-Table1 remains independent seed41/42/43 mean and sample SD. `prob_*` retains seed42 residue outputs, while `prob_*_seed41/42/43` exports all probabilities. All `pocket_prob_*` columns retain seed42. The default pockets.csv and UI show seed42 for all tasks. The result ZIP additionally includes pockets_independent_seeds.csv and summary.json has each seed's candidates separately. Mean recall is computed after separate evaluation, never by merging candidate sets.
+## Residue-level evaluation
 
-Strict DCC <10 Angstrom Top-N: metal 62.79 +/-2.87%; nuclear 72.27 +/-2.16%; small molecule 64.58 +/-0.79%. Metal uses top10%, radius8.5, probability-weighted centers, max-score-plus-size. Nuclear uses original seed thresholds and radii12/8/8; small molecule original seed thresholds and radius6 for every seed. Both use unweighted centers and mean-score-plus-size. Singletons remain eligible candidates. Benchmark replay requires the original cohort, mask-valid residues, annotations and coordinate mapping.
+`evaluate_table1.py` evaluates saved residue predictions. The task thresholds and aggregation rules are recorded in [paper_protocols.json](paper_protocols.json). Results are computed for each model and summarized as mean and sample standard deviation.
 
-restored_pocket_verification.json checks full-cohort candidate parity and DCC using archived probabilities. It does not certify fresh full-cohort feature generation or inference. Historical frozen_pocket_code_verification.json and ensemble_runtime_verification.json describe the superseded all-task ensemble. The restored CPU pipeline was also run on supplied P07014 features; all 11 existing unit tests passed.
+## Binding-site localization
 
-Metal retains its recorded test-exposure limitation. Restoring old methods does not create a new untouched test set. Checkpoint and scaler bytes are unchanged.
+Run the evaluator with per-model prediction tables, reference sites, and matching ESMFold structures:
 
-## Replay from saved probabilities and structures
+```sh
+python reproducibility/evaluate_pockets.py --seed41 seed41_test_predictions.csv --seed42 seed42_test_predictions.csv --seed43 seed43_test_predictions.csv --sites reference_sites.csv --pdb-dir esmfold_pdb --out-dir pocket_replay
+```
 
-Run `python reproducibility/evaluate_pockets.py --seed41 seed41_test_predictions.csv --seed42 seed42_test_predictions.csv --seed43 seed43_test_predictions.csv --sites reference_sites.csv --pdb-dir esmfold_pdb --out-dir pocket_replay`. Seed CSVs require peptide_id,center_pos,prob_metal/prob_nuclear/prob_small and mask_metal/mask_nuclear/mask_small. Reference CSV requires task (metal/nuclear/small),peptide_id,pocket_id,pocket_residues (1-based sequence positions). Only the frozen test cohort belongs in this reference file. PDBs must be single-chain with contiguous sequence-position numbering. The evaluator checks identical residue keys/masks, computes candidates independently, applies same-protein Top-N and strict DCC<10 A, then writes per-site distances, seed metrics and mean/sample SD. It also records input hashes. all_independent_pocket_replay.json documents the released evaluator replay. Older verification records retain their historical methods.
+### Input format
+
+| Input | Required fields |
+| --- | --- |
+| Prediction CSVs | `peptide_id`, `center_pos`, `prob_metal`, `prob_nuclear`, `prob_small`, `mask_metal`, `mask_nuclear`, `mask_small` |
+| Reference-site CSV | `task`, `peptide_id`, `pocket_id`, `pocket_residues` |
+| Structure directory | Single-chain PDB files with contiguous sequence-position numbering |
+
+The `task` field uses `metal`, `nuclear`, or `small`. Reference residue positions are 1-based. Use the same evaluation cohort, residue keys, and masks for all prediction tables.
+
+### Outputs
+
+The evaluator writes per-site distances, per-model metrics, aggregate means and sample standard deviations, and input checksums. Localization uses same-protein Top-N matching with a strict center-distance criterion of less than 10 Å. Candidate sets are evaluated independently for each model.
+
+See [paper_protocols.json](paper_protocols.json) for the complete evaluation configuration and [all_independent_pocket_replay.json](all_independent_pocket_replay.json) for the recorded benchmark replay.
