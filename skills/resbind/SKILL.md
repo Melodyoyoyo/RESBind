@@ -1,81 +1,30 @@
 ---
 name: resbind
-description: Install and run RESBind V6 for protein binding-residue prediction, including compute selection, FASTA checks, ProtT5 and ESMFold preparation, NetSurfP CSV acquisition, and local MCP or CLI inference. Route labeled evaluation and training requests separately.
+description: Predict protein binding residues and sites for metal ions, nucleic acids, and small molecules using RESBind. Prepare sequence features, run CLI or MCP prediction, and return result files.
 ---
 
 # RESBind
 
-Repository: https://github.com/Melodyoyoyo/RESBind. Prefer a user-supplied local
-RESBind checkout or trial ZIP when available; that route needs no GitHub account.
-The public repository can be cloned or downloaded without a GitHub account.
-Never substitute a similarly named model if access fails.
-This is a development candidate, not a certified turnkey public service.
+Repository: https://github.com/Melodyoyoyo/RESBind
 
-Preserve independent seeds41/42/43 for all three pocket tasks; no probability averaging and no refiner, bidirectional contacts built from ESMFold C-alpha
-coordinates at <=10 Angstrom without self edges. Keep checkpoint, scalers and
-validation thresholds together. Do not retrain or alter thresholds for ordinary prediction.
-Use `models/v6_bidirectional_ensemble` by default. Residue operating-point tracks
-retain seed42; per-seed probability columns support Table 1 evaluation. Pocket
-probabilities remain independent for every task. Metal uses top10% selection; other tasks use validation-F1 thresholds. See `reproducibility/paper_protocols.json`
-for exact task-specific selection, centers, ranking and selection history.
+## Choose a workflow
 
-## Route the request
+- **Prediction:** follow [prediction.md](references/prediction.md) to validate a sequence, prepare features, and run inference.
+- **MCP integration:** follow [mcp.md](references/mcp.md) to configure the local server and use its prediction tools.
+- **Training or evaluation:** follow [labeled-data.md](references/labeled-data.md) for dataset requirements and entry points.
 
-- Prediction: one protein FASTA per job, 20–1024 residues, no labels or data split.
-  Read [prediction.md](references/prediction.md) for the complete sequence-to-result workflow.
-- Evaluation/training: read [labeled-data.md](references/labeled-data.md) first.
-  A FASTA alone is not supervised training data. Do not infer negatives from missing labels.
-- MCP setup/calling: read [mcp.md](references/mcp.md). MCP currently executes
-  saved-feature CPU prediction; browser/terminal tools handle upstream preparation.
+Use an existing checkout when available. Otherwise, clone the repository or download its ZIP archive. Install RESBind in a dedicated Python environment and run the bundled P07014 example.
 
-Inspect input before expensive work. A cache hit requires exact normalized
-sequence and matching feature/model provenance, not merely an accession match.
-It does not establish that a protein is absent from training data.
-Report B/Z/U/O/J-to-X substitutions; let the user resolve biologically meaningful
-ambiguity before submitting or computing a changed sequence. Do not silently
-trim, split, concatenate chains, or discard invalid entries.
+## Inputs and compute
 
-For multiple sequences, report their count and lengths, choose a resource-aware
-serial or bounded-batch plan with the user, and keep one job and provenance record
-per sequence. Do not submit a whole collection to an external service by default.
+Each prediction accepts one protein sequence of 20–1,024 residues. Check that the ESMFold structure, ProtT5 embeddings, and NetSurfP CSV match the input sequence and residue order. Report any sequence normalization to the user.
 
-## Compute and permissions
+Use CPU inference for prepared features. For missing ProtT5 or ESMFold features, select a CUDA resource using [compute.md](references/compute.md). Scheduled clusters are covered in [hpc.md](references/hpc.md). Obtain NetSurfP results from the official service with the user's authorization to submit the sequence.
 
-Before downloading large models or choosing a compute host, read
-[compute.md](references/compute.md). It routes saved-feature CPU, local CUDA,
-ordinary remote servers (including laboratory-owned machines) and scheduled HPC
-use, and defines the handoff when the agent cannot connect.
-For HPC, then read [hpc.md](references/hpc.md): a separate HPC-access skill is
-optional, not a prerequisite. Discover the user's actual login and scheduler
-procedure; never inherit the developer's cluster settings.
+Use the bundled model configuration for prediction. Keep checkpoints and scalers together. Preserve user-provided data splits and labels when handling evaluation or training requests.
 
-Offer existing-feature CPU inference, local CUDA GPU, an authorized laboratory,
-personal or rented remote server, or an available HPC compute allocation.
-HPC is not mandatory; ownership and execution method are separate decisions.
-Inspect resources before selecting a route. Do not promise heavy feature models
-will fit a particular GPU or CPU until tested. Never run heavy models on an HPC
-login node, start a paid instance, acquire credentials, or upload confidential
-sequences without the corresponding user authorization.
+## Results
 
-Use a dedicated Python environment. Do not change a research environment or
-global agent configuration implicitly. Keep personal hostnames/SSH keys out of
-shared instructions. A website displaying examples supplies no compute resources.
+Return residue predictions for all three ligand classes, spatial binding-site candidates, the structure, summary, and result ZIP. Explain that positions use 1-based sequence numbering and that isolated residues are listed separately from multi-residue pockets.
 
-## Evidence and handoff
-
-Use English for distributable documentation, report headings, metadata keys and
-status descriptions. Conversation with the user may follow their preferred language.
-For prediction, prefer MCP when the client supports it and the user authorizes
-configuration; follow [mcp.md](references/mcp.md) for fallback and execution records.
-MCP is optional and does not change the model or its scientific outputs.
-
-Record repository revision, checkpoint checksum, normalized sequence checksum,
-upstream model snapshot revisions, NetSurfP source/job, feature checksums,
-commands/environment and output locations. Verify output length, residue order,
-finite probabilities and successful completion; describe cached versus fresh steps.
-
-Return all three residue tracks and downloadable files. Schema 3 exports all
-three tasks' spatial candidates; singleton components are isolated_residue, not
-pockets. Report pocket_counts and isolated_residue_counts separately. These
-components are not necessarily geometric cavities. Never present predictions as experimental binding
-evidence or claim this draft Skill has passed independent full-workflow acceptance.
+Check sequence length, residue order, finite probabilities, and the presence of the output files. Keep code revision, input checksums, feature sources, and execution logs with the local run. For multiple proteins, use separate output directories.
