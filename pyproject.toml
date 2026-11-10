@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 [project]
 name = "resbind-toolkit"
 version = "0.2.2"
-description = "RESBind V6 bidirectional no-refiner local release candidate"
+description = "Prediction of protein binding residues and sites for metal ions, nucleic acids, and small molecules"
 license = {file = "LICENSE"}
 requires-python = ">=3.9"
 dependencies = ["numpy", "pandas", "torch>=2.5.1"]
