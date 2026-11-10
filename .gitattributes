@@ -1,2 +1,2 @@
-# Preserve release-manifest checksums across Windows and Linux checkouts.
+# Preserve exact file bytes so checksum verification is consistent across platforms.
 * -text
