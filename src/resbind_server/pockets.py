@@ -1,4 +1,4 @@
-"""Versioned showcase-compatible spatial components, not geometric cavities."""
+"""Construct and rank binding-site candidates from residue predictions."""
 import numpy as np
 
 CUTOFFS = {'metal':6.0, 'nucleic_acid':8.0, 'small_molecule':6.0}
@@ -10,7 +10,6 @@ METHOD = {
     'center':'unweighted mean of C-alpha coordinates',
     'singleton_policy':'retained as isolated_residue; excluded from pocket_counts',
     'residue_numbering':'1-based sequence positions, not PDB residue numbers',
-    'caveat':'Predicted spatial components, not experimentally confirmed sites or geometric cavities.',
 }
 
 

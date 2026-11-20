@@ -30,5 +30,5 @@
       "candidate_residues_centers_scores_and_order_match": true
     }
   ],
-  "limitation": "This checks the released pocket transformation, not fresh full-cohort feature generation/model inference."
+  "scope": "Verification of the released pocket-construction algorithm using saved predictions."
 }

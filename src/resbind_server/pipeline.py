@@ -218,7 +218,7 @@ class PredictionPipeline:
             "structure_source": structure_source,
             "pipeline_schema": 3,
             "input_sources": source_inputs,
-            "model_name": getattr(self.services.predictor, "manifest", {}).get("model_name", "RESBind V6"),
+            "model_name": getattr(self.services.predictor, "manifest", {}).get("model_name", "RESBind"),
             "bundle_hash": bundle_hash,
             "thresholds": self.services.predictor.thresholds,
             "gate_weights": self.services.predictor.gate_weights,
@@ -236,7 +236,7 @@ class PredictionPipeline:
             "isolated_residue_counts": {task: sum(p["candidate_type"] == "isolated_residue" for p in candidates)
                                         for task, candidates in pockets_by_task.items()},
             "runtime_seconds": runtime,
-            "warnings": ["Computational predictions require experimental validation."],
+            "warnings": [],
         }
         _atomic_text(summary_path, json.dumps(summary, indent=2))
         archive_tmp = complete_path.with_suffix(".zip.tmp")

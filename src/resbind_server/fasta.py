@@ -49,7 +49,7 @@ def parse_single_fasta(text: str, default_id: str = "query") -> ProteinInput:
     if not records or not records[0][1]:
         raise ValueError("Enter one protein sequence or one FASTA record.")
     if len(records) != 1:
-        raise ValueError("The prototype accepts exactly one FASTA record per job.")
+        raise ValueError("Provide exactly one FASTA record per job.")
     header, raw_sequence = records[0]
     sequence = raw_sequence.upper().translate(_AMBIGUOUS)
     invalid = sorted(set(sequence) - _ALLOWED)
@@ -58,7 +58,7 @@ def parse_single_fasta(text: str, default_id: str = "query") -> ProteinInput:
     if len(sequence) < 20:
         raise ValueError("Protein sequence must contain at least 20 residues.")
     if len(sequence) > 1024:
-        raise ValueError("Protein sequence exceeds the prototype limit of 1,024 residues.")
+        raise ValueError("Protein sequence exceeds the maximum length of 1,024 residues.")
     if len(sequence) >= 20 and set(sequence) <= _NUCLEOTIDE:
         raise ValueError("Input appears to be a nucleotide sequence, not a protein sequence.")
     return ProteinInput(_safe_identifier(header, default_id), sequence)

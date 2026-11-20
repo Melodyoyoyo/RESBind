@@ -15,14 +15,14 @@ def checks(settings: Settings, netsurfp_csv: Path = None) -> List[Tuple[str, boo
         available = importlib.util.find_spec(module) is not None
         results.append((f"python:{module}", available, "installed" if available else "missing"))
     manifest = settings.bundle_dir / "manifest.json"
-    results.append(("v6_bundle", manifest.exists(), str(manifest)))
+    results.append(("model_bundle", manifest.exists(), str(manifest)))
     if manifest.exists():
         try:
             data = json.loads(manifest.read_text(encoding="utf-8"))
             missing = [name for name in data["files"].values() if not (settings.bundle_dir / name).exists()]
-            results.append(("v6_bundle_files", not missing, "ok" if not missing else "missing: " + ", ".join(missing)))
+            results.append(("model_bundle_files", not missing, "ok" if not missing else "missing: " + ", ".join(missing)))
         except Exception as exc:
-            results.append(("v6_bundle_manifest", False, repr(exc)))
+            results.append(("model_bundle_manifest", False, repr(exc)))
     if netsurfp_csv is not None:
         exists = Path(netsurfp_csv).is_file()
         results.append(("netsurfp", exists, "User CSV; content/sequence validation occurs during predict: " + str(netsurfp_csv)))

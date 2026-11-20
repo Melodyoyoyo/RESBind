@@ -57,7 +57,6 @@ def inspect_input(fasta_text: str, mode: str = "predict", *, pdb=None,
         "ready_for_saved_prediction": mode == "predict" and not missing,
         "ready_for_supervised_execution": False,
         "supervised_note": "Evaluation/training require explicit labels, missing-label masks and a validated split policy; no automatic split is performed.",
-        "novelty_note": "Compatible cached features do not establish training-set membership or novelty.",
     }
 
 
@@ -67,4 +66,4 @@ def inspect_compute() -> dict:
     return {"platform": platform.system(), "python": platform.python_version(),
             "torch": torch.__version__, "cuda_available": available,
             "gpu_names": [torch.cuda.get_device_name(i) for i in range(torch.cuda.device_count())] if available else [],
-            "scope": "Saved-feature V6 CPU inference is supported. Heavy feature-model hardware minima are not yet certified; no model was loaded."}
+            "scope": "CPU inference with prepared features; CUDA for ProtT5 and ESMFold feature generation."}

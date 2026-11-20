@@ -34,6 +34,6 @@ assert len(checks)==45, 'Expected all 15 cases x 3 tasks'
 report={'passed':True,'protein_count':15,'task_case_count':len(checks),
         'numeric_tolerance':1e-10,'checks':checks,
         'demo_implementation_sha256':hashlib.sha256((args.demo_data.parent/'pockets.py').read_bytes()).hexdigest(),
-        'scope':'Identical supplied scores and structures; postprocessing parity, not model accuracy.'}
+        'scope':'Pocket postprocessing comparison using identical supplied scores and structures.'}
 if args.report: args.report.write_text(json.dumps(report,indent=2)+'\n',encoding='utf-8')
 print('PASS: all 45 task/case combinations match the stored website candidates.')

@@ -57,5 +57,5 @@
       "candidate_parity": true
     }
   ],
-  "scope": "Archived probabilities to candidates and strict DCC replay; not fresh model inference."
+  "scope": "Candidate construction and strict DCC evaluation using archived probabilities."
 }

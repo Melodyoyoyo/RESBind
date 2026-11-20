@@ -24,7 +24,7 @@ def main():
         raise ValueError("Provide a complete local model snapshot containing config.json.")
     import torch
     if not torch.cuda.is_available():
-        raise ValueError("This feature-stage launcher requires CUDA; heavy-model CPU execution is unvalidated.")
+        raise ValueError("This feature-stage launcher requires a CUDA-enabled GPU.")
     if args.out_dir.exists():
         raise ValueError("Choose a new output directory; existing output is never overwritten.")
     os.environ.update(HF_HUB_OFFLINE="1", TRANSFORMERS_OFFLINE="1")

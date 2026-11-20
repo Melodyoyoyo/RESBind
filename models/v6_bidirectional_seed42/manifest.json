@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "model_name": "RESBind V6 bidirectional seed 42",
+  "model_name": "RESBind seed 42",
   "source_checkpoint_sha256": "96a4d04be8e0a483588a36745a7a69a5284488d5fff98b37cec476d9f90577b2",
   "tasks": [
     "metal",

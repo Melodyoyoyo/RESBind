@@ -273,6 +273,6 @@ def summarize_surface(protein_id: str, sequence: str, residue: pd.DataFrame) -> 
     frame = pd.DataFrame(rows)
     matrix = frame[SURFACE_COLUMNS].to_numpy(dtype=np.float32)
     if matrix.shape != (length, 25) or not np.isfinite(matrix).all():
-        raise RuntimeError(f"Invalid V6 surface feature matrix: {matrix.shape}")
+        raise RuntimeError(f"Invalid surface feature matrix: {matrix.shape}")
     return frame
 

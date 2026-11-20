@@ -58,7 +58,7 @@ def inspect_fasta(fasta: str, mode: str = "predict", pdb: str | None = None,
 
 @mcp.tool()
 def predict_saved(fasta: str, pdb: str, netsurfp_csv: str, prott5_npz: str) -> dict:
-    """Run V6 on CPU with ALL features already supplied. Writes a new result directory.
+    """Run RESBind on CPU using supplied sequence features. Writes a new result directory.
 
     PDB must be an ESMFold prediction with matching sequence; provenance is the
     caller's responsibility. No downloads, training or remote jobs. Synchronous,
@@ -95,7 +95,7 @@ def predict_saved(fasta: str, pdb: str, netsurfp_csv: str, prott5_npz: str) -> d
             raise ValueError("Prediction failed: " + result.stderr[-2000:])
         summary = json.loads((run / "results" / "summary.json").read_text(encoding="utf-8"))
         return {"summary": summary, "artifacts": {p.name: str(p) for p in (run / "results").iterdir()},
-                "scope": "Three residue tasks and task-wise spatial candidates. Isolated residues are separate from pockets; predictions are not experimental evidence."}
+                "scope": "Residue predictions and ranked binding-site candidates for metal ions, nucleic acids, and small molecules. Isolated residues are listed separately."}
     finally:
         _lock.release()
 

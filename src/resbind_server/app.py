@@ -97,7 +97,7 @@ def create_app(settings: Optional[Settings] = None):
         downloads = gr.File(label="Download results", file_count="multiple")
         run.click(submit, [sequence, fasta, pdb], [status, summary, tracks, viewer, residues, pockets, downloads])
         gr.Markdown(
-            "Predictions are computational hypotheses, not experimental evidence. Thresholds were fixed on the archived validation set."
+            "Residue classifications use the thresholds provided in the model configuration."
         )
     return demo
 

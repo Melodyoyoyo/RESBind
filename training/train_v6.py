@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 """Train a unified multi-task shallow-shared gated MLP model.
 
-V6 shallow-shared gated MLP:
+RESBind shallow-shared gated MLP:
   - Frozen ProtT5 residue embeddings are used directly.
   - Surface descriptors and contact-neighbor summaries use separate encoders.
   - The three view encoders are shared across tasks.

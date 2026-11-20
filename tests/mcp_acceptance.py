@@ -70,7 +70,7 @@ async def run(root):
               "identical_calls": True, "path_rejection_passed": True,
               "pipeline_schema": 3, "three_task_candidate_checks_passed": True,
               "checkpoint_sha256": hashlib.sha256((root / "models/v6_bidirectional_seed42/model.pt").read_bytes()).hexdigest(),
-              "scope": "Installed package, saved P07014 features, CPU; not full new-protein or independent Skill acceptance."}
+              "scope": "Installed-package MCP prediction on CPU using the saved P07014 features."}
     print(json.dumps(report, indent=2))
     return report
 

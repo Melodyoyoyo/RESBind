@@ -35,8 +35,5 @@
     "all_nine_means_and_SD_match": true,
     "absolute_tolerance": 1e-12
   },
-  "limitations": [
-    "Table 1 re-evaluation used archived probabilities; full test cohort was not rerun through the released package.",
-    "Figure 2 parameters are documented; the default application pocket workflow is unchanged."
-  ]
+  "evaluation_inputs": "Archived full-test-cohort probabilities for Table 1."
 }

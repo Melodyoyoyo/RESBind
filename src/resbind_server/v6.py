@@ -74,12 +74,12 @@ class V6Predictor:
         self.bundle_dir = Path(bundle_dir)
         manifest_path = self.bundle_dir / "manifest.json"
         if not manifest_path.exists():
-            raise FileNotFoundError(f"Missing V6 inference bundle: {manifest_path}")
+            raise FileNotFoundError(f"Missing RESBind model bundle: {manifest_path}")
         self.manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
         if self.manifest.get("schema_version") != 1:
-            raise RuntimeError("Unsupported V6 inference-bundle schema.")
+            raise RuntimeError("Unsupported model-bundle schema.")
         if self.manifest.get("bidirectional_contacts") is not True:
-            raise RuntimeError("This package requires the bidirectional V6 bundle.")
+            raise RuntimeError("This package requires a model bundle with bidirectional contacts.")
         files = self.manifest["files"]
         self.raw_surface_scaler = ArrayScaler(self.bundle_dir / files["raw_surface_scaler"])
         self.view_prot_scaler = ArrayScaler(self.bundle_dir / files["view_prot_scaler"])
