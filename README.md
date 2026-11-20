@@ -76,6 +76,7 @@ Residue positions use 1-based sequence numbering. Spatial candidates are labeled
 
 ## Documentation
 
+- [Benchmark dataset splits](data/splits/README.md)
 - [Prediction and feature preparation](skills/resbind/references/prediction.md)
 - [Compute options](skills/resbind/references/compute.md)
 - [MCP integration](skills/resbind/references/mcp.md)
