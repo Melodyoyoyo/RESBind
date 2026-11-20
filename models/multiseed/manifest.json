@@ -2,16 +2,16 @@
   "schema_version": 2,
   "model_name": "RESBind three independent models",
   "members": {
-    "41": "../v6_bidirectional_seed41",
-    "42": "../v6_bidirectional_seed42",
-    "43": "../v6_bidirectional_seed43"
+    "41": "../seed41",
+    "42": "../seed42",
+    "43": "../seed43"
   },
   "residue_output_seed": 42,
   "refiner": false,
   "files": {
-    "41": "../v6_bidirectional_seed41/manifest.json",
-    "42": "../v6_bidirectional_seed42/manifest.json",
-    "43": "../v6_bidirectional_seed43/manifest.json"
+    "41": "../seed41/manifest.json",
+    "42": "../seed42/manifest.json",
+    "43": "../seed43/manifest.json"
   },
   "pocket_protocol": "All tasks independently evaluate seeds41/42/43; aggregate metrics by mean and sample SD ddof=1. Never average probabilities."
 }

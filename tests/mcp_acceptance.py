@@ -15,7 +15,7 @@ import pandas as pd
 async def run(root):
     env = os.environ.copy()
     env.update(RESBIND_MCP_WORKSPACE=str(root),
-               RESBIND_BUNDLE_DIR=str(root / "models/v6_bidirectional_seed42"))
+               RESBIND_BUNDLE_DIR=str(root / "models/seed42"))
     params = StdioServerParameters(command=sys.executable,
                                    args=["-I", "-m", "resbind_server.mcp_server"], env=env)
     args = {"fasta": "examples/P07014/sequence.fasta", "pdb": "examples/P07014/structure.pdb",
@@ -69,7 +69,7 @@ async def run(root):
               "tools": sorted(names), "max_score_differences": deltas,
               "identical_calls": True, "path_rejection_passed": True,
               "pipeline_schema": 3, "three_task_candidate_checks_passed": True,
-              "checkpoint_sha256": hashlib.sha256((root / "models/v6_bidirectional_seed42/model.pt").read_bytes()).hexdigest(),
+              "checkpoint_sha256": hashlib.sha256((root / "models/seed42/model.pt").read_bytes()).hexdigest(),
               "scope": "Installed-package MCP prediction on CPU using the saved P07014 features."}
     print(json.dumps(report, indent=2))
     return report

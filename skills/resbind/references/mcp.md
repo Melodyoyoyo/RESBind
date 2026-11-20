@@ -25,7 +25,7 @@ Set the following environment variables to absolute paths:
 | Variable | Value |
 | --- | --- |
 | `RESBIND_MCP_WORKSPACE` | An existing directory containing the prediction inputs and outputs |
-| `RESBIND_BUNDLE_DIR` | The bundled multi-model directory under `models/` |
+| `RESBIND_BUNDLE_DIR` | Absolute path to `models/multiseed/` in the repository |
 
 The server uses local files in the configured workspace. Keep the server on the local stdio connection provided by the client.
 

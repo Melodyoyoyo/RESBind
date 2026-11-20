@@ -1,6 +1,6 @@
 # Model training
 
-This directory contains the RESBind [training implementation](train_v6.py).
+This directory contains the RESBind [training implementation](train.py).
 
 Install the training dependencies from the repository root:
 

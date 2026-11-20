@@ -94,19 +94,19 @@
   },
   "checkpoint_provenance": {
     "41": {
-      "bundle": "models/v6_bidirectional_seed41",
+      "bundle": "models/seed41",
       "source_checkpoint_sha256": "193713dba55a5504a41557e6b202380f89c5c676386a6b8ab76c0156cad12cca",
       "exported_checkpoint_sha256": "44763588f3002d8371a814f89c94a4a5ba43a3a1ba94c10b3fb338621eec2717",
       "tensor_equality_to_research_checkpoint": true
     },
     "42": {
-      "bundle": "models/v6_bidirectional_seed42",
+      "bundle": "models/seed42",
       "source_checkpoint_sha256": "96a4d04be8e0a483588a36745a7a69a5284488d5fff98b37cec476d9f90577b2",
       "exported_checkpoint_sha256": "6ce257e8edd76f26cfb392fc3a6c5911ee3ab28b2bfb055e12042773e8736d20",
       "tensor_equality_to_research_checkpoint": true
     },
     "43": {
-      "bundle": "models/v6_bidirectional_seed43",
+      "bundle": "models/seed43",
       "source_checkpoint_sha256": "12b1d8d68fcb681b4e8f9603586a6812906154c38aef6cb5cb08ace590233c8d",
       "exported_checkpoint_sha256": "00b0398c11bbb37173de993ddf79b1397a1fec7efa6c81c7858a8282c7156e82",
       "tensor_equality_to_research_checkpoint": true

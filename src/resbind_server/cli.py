@@ -9,7 +9,7 @@ from .doctor import run_doctor
 from .features import ESMFoldProvider, NetSurfPProvider, ProtT5Provider
 from .pipeline import PipelineServices, PredictionPipeline
 from .settings import Settings
-from .v6 import load_predictor
+from .predictor import load_predictor
 
 
 def build_pipeline(settings: Settings) -> PredictionPipeline:

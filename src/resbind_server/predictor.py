@@ -69,7 +69,7 @@ def build_contact_features(prot: np.ndarray, surface: np.ndarray, contact_npz: P
     return np.concatenate([pooled_prot, pooled_surface, degree[:, None], available], axis=1).astype(np.float32)
 
 
-class V6Predictor:
+class ResiduePredictor:
     def __init__(self, bundle_dir: Path, device: str = "auto"):
         self.bundle_dir = Path(bundle_dir)
         manifest_path = self.bundle_dir / "manifest.json"
@@ -155,8 +155,8 @@ class V6Predictor:
         return out
 
 
-class V6EnsemblePredictor:
-    """Compatibility class name: load three models, export independent probabilities."""
+class MultiSeedPredictor:
+    """Load three models and export their independent probabilities."""
     formal_pockets = True
 
     def __init__(self, bundle_dir: Path, device: str = 'auto'):
@@ -164,7 +164,7 @@ class V6EnsemblePredictor:
         self.manifest = json.loads((self.bundle_dir / 'manifest.json').read_text(encoding='utf-8'))
         if self.manifest.get('schema_version') != 2:
             raise ValueError('Expected three-model bundle schema 2')
-        self.members = {seed: V6Predictor(self.bundle_dir / relative, device)
+        self.members = {seed: ResiduePredictor(self.bundle_dir / relative, device)
                         for seed, relative in self.manifest['members'].items()}
         if set(self.members) != {'41','42','43'}:
             raise ValueError('Independent evaluation requires seeds 41/42/43')
@@ -201,4 +201,4 @@ class V6EnsemblePredictor:
 
 def load_predictor(bundle_dir: Path, device: str = 'auto'):
     meta = json.loads((Path(bundle_dir) / 'manifest.json').read_text(encoding='utf-8'))
-    return (V6EnsemblePredictor if meta.get('schema_version') == 2 else V6Predictor)(bundle_dir, device)
+    return (MultiSeedPredictor if meta.get('schema_version') == 2 else ResiduePredictor)(bundle_dir, device)

@@ -9,7 +9,7 @@ python -m pip install .
 resbind predict --fasta examples/P07014/sequence.fasta --pdb examples/P07014/structure.pdb --netsurfp-csv examples/P07014/netsurfp.csv --prott5-npz examples/P07014/prott5.npz --device cpu --out-dir results/P07014
 ```
 
-Keep the `models/` directory alongside the code. When running outside the repository root, set `RESBIND_BUNDLE_DIR` to the absolute path of the bundled multi-model directory. `RESBIND_JOB_ROOT` and `RESBIND_CACHE_ROOT` select writable job and cache locations.
+Keep the `models/` directory alongside the code. When running outside the repository root, set `RESBIND_BUNDLE_DIR` to the absolute path of `models/multiseed/`. `RESBIND_JOB_ROOT` and `RESBIND_CACHE_ROOT` select writable job and cache locations.
 
 ## Prepare inputs
 

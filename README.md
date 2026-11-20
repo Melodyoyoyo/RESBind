@@ -32,7 +32,7 @@ Install RESBind:
 python -m pip install .
 ```
 
-Run the commands below from the repository root, with the bundled `models/` directory in place.
+Run the commands below from the repository root, with the bundled `models/` directory in place. The default bundle is `models/multiseed/`; individual models are in `models/seed41/`, `models/seed42/`, and `models/seed43/`.
 
 ## Quick start
 
