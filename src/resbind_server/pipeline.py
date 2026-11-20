@@ -88,13 +88,20 @@ class PredictionPipeline:
         imported_surface = load_netsurfp_table(netsurfp_csv, record.protein_id, record.sequence, content=csv_bytes) if csv_bytes is not None else None
         imported_embedding = load_prott5_npz(prott5_npz, record.sequence, content=npz_bytes) if npz_bytes is not None else None
         bundle_hash = str(getattr(self.services.predictor, "bundle_hash", "unbundled"))
+        formal = getattr(self.services.predictor, "formal_pockets", False)
+        pocket_method = FORMAL_METHOD if formal else {
+            **METHOD,
+            "threshold_mode": getattr(self.services.predictor, "manifest", {}).get(
+                "threshold_mode", "model_configuration"
+            ),
+        }
         source_inputs = {
             "netsurfp": {"mode": "imported_csv" if csv_bytes is not None else "configured_provider", "sha256": _sha256_bytes(csv_bytes) if csv_bytes is not None else None},
             "prott5": {"mode": "imported_npz" if npz_bytes is not None else "generated", "sha256": _sha256_bytes(npz_bytes) if npz_bytes is not None else None},
             "structure": {"mode": "uploaded" if pdb_path else "generated", "sha256": _sha256_bytes(pdb_bytes) if pdb_path else None},
         }
         job_key = json.dumps({
-            "pipeline_schema": 3, "pocket_method": FORMAL_METHOD if getattr(self.services.predictor,'formal_pockets',False) else METHOD, "protein_id": record.protein_id,
+            "pipeline_schema": 3, "pocket_method": pocket_method, "protein_id": record.protein_id,
             "sequence": record.sequence, "bundle_hash": bundle_hash, "inputs": source_inputs,
         }, sort_keys=True).encode()
         job_id = _sha256_bytes(job_key)[:16]
@@ -157,7 +164,6 @@ class PredictionPipeline:
         _atomic_csv(predictions_path, predictions)
 
         stage("Clustering pockets")
-        formal = getattr(self.services.predictor, 'formal_pockets', False)
         cutoffs = FORMAL_CUTOFFS if formal else CUTOFFS
         pocket_thresholds = self.services.predictor.pocket_thresholds if formal else self.services.predictor.thresholds
         pockets_by_task = all_task_pockets(
@@ -220,7 +226,7 @@ class PredictionPipeline:
                 task: int(predictions[f"pred_{task}"].sum())
                 for task in ("metal", "nucleic_acid", "small_molecule")
             },
-            "pocket_method": FORMAL_METHOD if formal else METHOD,
+            "pocket_method": pocket_method,
             "residue_probability_source": "seed42; each seed also exported separately" if formal else "single selected model",
             "pocket_probability_source": "All tasks independent seeds41/42/43; seed42 visualization, no probability ensemble" if formal else "single selected model",
             "independent_pockets_by_task_and_seed": independent_pockets,

@@ -4,7 +4,7 @@ import numpy as np
 CUTOFFS = {'metal':6.0, 'nucleic_acid':8.0, 'small_molecule':6.0}
 METHOD = {
     'version':'task_components_v1', 'cutoffs_angstrom':CUTOFFS,
-    'threshold_mode':'validation_MCC', 'distance':'C-alpha Euclidean <= cutoff',
+    'threshold_mode':'model_configuration', 'distance':'C-alpha Euclidean <= cutoff',
     'ranking':'mean_probability + 0.05 * ln(1 + residue_count)',
     'tie_break':'descending size, then ascending first sequence position',
     'center':'unweighted mean of C-alpha coordinates',
